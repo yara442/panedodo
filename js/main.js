@@ -40,17 +40,50 @@
   window.addEventListener('resize', () => moveIndicator(document.querySelector('.tabs__link.is-active')));
   requestAnimationFrame(() => moveIndicator(links[0]));
 
-  /* ---------- Quiz ----------
-     Nur die erste Frage stammt aus dem Design. Fragen 2–3 und die
-     Resultate sind Platzhalter – einfach hier anpassen. */
+  /* ---------- Quiz ---------- */
   const QUESTIONS = [
-    { q: 'Lieber Knusprig oder Weich?', a: [['Knusprig', 'k'], ['Weich', 'w']] },
-    { q: 'Lieber Süss oder Salzig?',     a: [['Süss', 's'], ['Salzig', 'z']] },
-    { q: 'Zmorge oder Apéro?',           a: [['Zmorge', 'm'], ['Apéro', 'a']] },
+    { q: '«Harte Schale, weicher Kern», trifft das auf dich zu?', a: [
+      ['Nö', ['Butterzopf', 'Party-Brötchen']],
+      ['Yep', ['Nusstorte', 'Weihnachtsguetsli']],
+    ] },
+    { q: 'Alles ist besser, wenn es süss ist.', a: [
+      ['Agree', ['Nusstorte', 'Weihnachtsguetsli']],
+      ['Disagree', ['Butterzopf', 'Party-Brötchen']],
+    ] },
+    { q: 'Wie gehst du an Aufgaben ran? Immer mal wieder ein bisschen oder einmal, aber dann richtig.', a: [
+      ['Mit Babyschritten ist alles zu meistern.', ['Weihnachtsguetsli', 'Party-Brötchen']],
+      ['Alles zusammen, und dann ist es durch.', ['Nusstorte', 'Butterzopf']],
+    ] },
+    { q: 'Was ist deine Meinung zu Weihnachtsliedern?', a: [
+      ['Konstant ab November.', ['Weihnachtsguetsli', 'Party-Brötchen']],
+      ['Am 24. Dez. und keinen Tag früher oder später.', ['Nusstorte', 'Butterzopf']],
+    ] },
+    { q: 'Was sind deine Wochenendpläne?', a: [
+      ['Ausschlafen und dann vielleicht ein Brunch.', ['Butterzopf']],
+      ['Ich habe bereits mit 10 Personen in 4 Städten abgemacht.', ['Party-Brötchen']],
+    ] },
+    { q: 'Was bist du eher?', a: [
+      ['Einzelgänger', ['Weihnachtsguetsli', 'Party-Brötchen']],
+      ['Team-Player', ['Nusstorte', 'Butterzopf']],
+    ] },
+    { q: 'Was ist deine Geschirrspül-Herangehensweise?', a: [
+      ['Vorspülen und rein damit.', ['Butterzopf', 'Party-Brötchen']],
+      ['Zuerst lassen wir’s mal einweichen.', ['Nusstorte', 'Weihnachtsguetsli']],
+    ] },
+    { q: 'Wie wichtig ist es dir, ein gutes Outfit zu haben?', a: [
+      ['Sehr!', ['Butterzopf', 'Party-Brötchen']],
+      ['Eh… Auf die inneren Werte kommt es an.', ['Nusstorte', 'Weihnachtsguetsli']],
+    ] },
+    { q: 'Welche Getränke entsprechen dir?', a: [
+      ['Ein Macchiato oder eine warme Schoggi', ['Weihnachtsguetsli']],
+      ['Schwarztee oder ein guter Espresso', ['Nusstorte']],
+    ] },
   ];
   const RESULTS = {
-    k: { z: 'Baguette', s: 'Nusstorte' },
-    w: { z: 'Laugenbrötli', s: 'Butterzopf' },
+    Nusstorte: 'Du bist eine Nusstorte! Du hast vielleicht eine etwas harte Schale, aber dein Kern ist unglaublich süss und gehaltvoll. Du bist bodenständig und hast ordentlich Substanz. Auf dich kann man sich lange verlassen – du gehst so schnell nicht kaputt!',
+    Butterzopf: 'Du bist ein Butterzopf! Du bist der Inbegriff von Gemütlichkeit und Harmonie. Ohne dich ist ein entspanntes Wochenende kein echtes Wochenende. Alle lieben dich, du bringst die Menschen am Tisch zusammen.',
+    'Party-Brötchen': 'Du bist ein Party-Brötchen! Gesellig, vielseitig und immer da, wo was los ist! Du brauchst keine stundenlange Vorbereitung, um der Star des Abends zu sein. Du bist der perfekte Begleiter für spontane Aktionen.',
+    Weihnachtsguetsli: 'Du bist ein Weihnachtsguetsli! Du bist voller Freude und Energie! Du verbreitest gute Laune und machst den Alltag ein bisschen bunter und süsser. Du bist ein echter Geniesser mit einer knusprigen Schale und einem weichen Kern. Stress lässt du gar nicht erst an dich ran.',
   };
 
   const form = document.querySelector('[data-quiz]');
@@ -68,8 +101,8 @@
     function render() {
       const { q, a } = QUESTIONS[i];
       qEl.textContent = q;
-      aEl.innerHTML = a.map(([label, val]) =>
-        `<label class="answer"><input type="radio" name="q${i}" value="${val}" required>${label}</label>`
+      aEl.innerHTML = a.map(([label], answerIndex) =>
+        `<label class="answer"><input type="radio" name="q${i}" value="${answerIndex}" required>${label}</label>`
       ).join('');
       next.disabled = true;
       next.textContent = i === QUESTIONS.length - 1 ? 'Resultat' : 'Next';
@@ -87,10 +120,14 @@
       if (!checked) return;
       picks.push(checked.value);
       if (++i < QUESTIONS.length) { render(); aEl.querySelector('input')?.focus(); return; }
-      const product = (RESULTS[picks[0]] || {})[picks[1]] || 'Rosmarin-Focaccia';
+      const scores = Object.fromEntries(Object.keys(RESULTS).map(product => [product, 0]));
+      picks.forEach((answerIndex, questionIndex) => {
+        QUESTIONS[questionIndex].a[answerIndex][1].forEach(product => { scores[product] += 1; });
+      });
+      const product = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
       step.hidden = true;
       result.hidden = false;
-      result.innerHTML = `Deine Crustität ist<strong>${product}</strong>`;
+      result.textContent = RESULTS[product];
       next.textContent = 'Nochmals';
       next.disabled = false;
     });
