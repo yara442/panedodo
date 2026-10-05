@@ -73,7 +73,7 @@ body {
   font-size: var(--fs-body);
   line-height: 1.2;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -90,7 +90,8 @@ button, input, textarea { font: inherit; color: inherit; }
   position: relative;
   max-width: 1728px;
   margin: 0 auto;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   display: flex;
   flex-direction: column;
   gap: var(--section-gap);
@@ -183,9 +184,14 @@ position: relative; z-index: 1;
 .weg { position: relative; }
 
 .tabs {
-  position: relative; z-index: 1;
+  --tabs-padding-top: max(calc(124 * var(--u)), 40px);
+  --logo-top: max(calc(30 * var(--u)), 12px);
+  --logo-size: max(calc(81 * var(--u)), 52px);
+  position: sticky; z-index: 20;
+  top: calc(var(--logo-top) + var(--logo-size) - var(--tabs-padding-top));
   margin: 0 var(--gutter);
-  padding: max(calc(124 * var(--u)), 40px) 0 0;
+  padding: var(--tabs-padding-top) 0 0;
+  background: transparent;
 }
 .tabs__list {
   display: flex; justify-content: space-between; gap: 15px;
@@ -207,32 +213,31 @@ position: relative; z-index: 1;
 
 /* Mise en Place */
 .mise {
-  height: calc(812 * var(--u));
-  margin-top: max(calc(32 * var(--u)), 16px);
-  padding-top: calc(136 * var(--u));
+  position:relative;
+  margin-top: max(calc(32 * var(--u)), 8px);
+  margin-bottom: -1px;
 }
 .mise__bg {
-  position: absolute; left: 0; right: 0; top: calc(22 * var(--u));
-  height: calc(790 * var(--u));
-  background: url("../assets/bg_mise.svg") center / 100% 100% no-repeat;
+  position: absolute; inset: 0;
+  background: url("../assets/bg_mise.webp") center / 100% 100% no-repeat;
 }
-.mise__title { position: relative; color: var(--c-blue); text-align: center; }
+.mise__title { color: var(--c-black); text-align: left; }
 .mise__img {
-  position: absolute; z-index: 2;
-  left: calc(36 * var(--u)); top: calc(-148 * var(--u));
-  width: calc(1656 * var(--u)); height: calc(703 * var(--u));
-  object-fit: contain;
+  position: relative; z-index: 2;
+  width: 100%; height: auto;
 }
 .mise__body {
   position: relative; z-index: 3;
   width: calc(826 * var(--u));
   margin: calc(64 * var(--u)) auto 0;
+  padding-bottom: calc(384 * var(--u));
 }
 
 /* Kneten */
-.kneten { height: calc(865 * var(--u)); }
-.kneten__img { width: 100%; height: 100%; object-fit: cover; }
-.kneten__bubble { position: absolute; left: calc(1260 * var(--u)); top: 0; }
+.kneten { height: auto; }
+.kneten__img { width: 100%; height: auto; }
+.kneten__bubble { position: absolute; left: calc(1260 * var(--u)); top: calc(200  * var(--u)); }
+
 
 /* Sprechblase */
 .bubble {
@@ -252,7 +257,7 @@ position: relative; z-index: 1;
 }
 
 /* Aufgehen */
-.aufgehen { padding: calc(126 * var(--u)) var(--gutter); }
+.aufgehen { padding: calc(256 * var(--u)) var(--gutter); }
 .aufgehen__title {
   display: flex; flex-direction: column; gap: calc(200 * var(--u));
   color: var(--c-yellow); text-align: center;
@@ -266,23 +271,28 @@ position: relative; z-index: 1;
 
 /* Backen & Verpacken */
 .backen {
-  min-height: calc(1494 * var(--u));
-  padding-top: calc(128 * var(--u));
-  padding-bottom: calc(72 * var(--u));
+  display: flex; flex-direction: column;
+  gap: calc(124 * var(--u));
+  padding-top: calc(256 * var(--u));
+  padding-bottom: calc(256 * var(--u));
 }
 .backen__bg {
-  position: absolute; inset: 0;
-  background: url("../assets/bg_backen.svg") center / 100% 100% no-repeat;
+  position: absolute; z-index: 0; inset: 0;
+  background: url("../assets/bg_backen.webp") center / 100% 100% no-repeat;
+}
+.backen > .title-unit {
+  position: relative; z-index: 1; left: auto; top: auto; width: 100%;
 }
 .backen__img {
-  position: absolute; z-index: 1;
-  left: calc(30 * var(--u)); top: calc(471 * var(--u));
-  width: calc(1729 * var(--u)); max-width: none;
+  position: relative; z-index: 1;
+  left: auto; top: auto;
+  width: calc(1729 * var(--u)); max-width: none; height: auto;
+  margin-left: calc(30 * var(--u));
 }
 .backen__body {
-  position: absolute; z-index: 2;
-  left: calc(480 * var(--u)); top: calc(853 * var(--u));
+  position: relative; z-index: 2;
   width: calc(826 * var(--u));
+  margin: 0 0 0 calc(480 * var(--u));
 }
 
 /* Mampf */
@@ -492,21 +502,19 @@ position: relative; z-index: 1;
   .hero__star { left: -10%; width: 120%; top: 150px; }
   .hero__baguette { left: 12%; width: 76%; top: 130px; }
 
-  .tabs { padding-top: 24px; }
+  .tabs { --tabs-padding-top: 24px; }
   .tabs__list { justify-content: flex-start; gap: 24px; }
 
   /* Collagen werden zu gestapelten Blöcken */
   .mise { height: auto; margin-top: 0; padding: 0 0 56px; }
-  .mise__bg { top: 0; bottom: 0; height: auto; background: var(--c-lavender); }
+  .mise__bg { background-color: var(--c-lavender); }
   .mise { padding-top: 28px; }
-  .mise__img { position: relative; z-index: 2; top: auto; left: 0; width: 100%; height: auto; margin-bottom: -4vw; }
+  .mise__img { margin-bottom: 0; }
   .mise__body, .backen__body {
     position: relative; left: auto; top: auto;
     width: auto; margin: 32px var(--gutter) 0;
   }
 
-  .kneten { height: auto; }
-  .kneten__img { aspect-ratio: 1728 / 865; }
   .kneten__bubble { --bw: 120px; left: auto; right: 2%; top: -40px; }
 
   .aufgehen { padding-block: 40px; }
@@ -514,8 +522,10 @@ position: relative; z-index: 1;
   .aufgehen__img { top: calc(40px + 11vw); left: 3%; width: 94%; }
   .aufgehen__bubble { --bw: 104px; left: 1%; top: 8px; }
 
-  .backen { min-height: 0; padding: 64px 0 80px; }
-  .backen__img { position: relative; left: 0; top: auto; width: 100%; margin-top: 16px; }
+  .backen { padding: calc(256 * var(--u)) 0; }
+  .backen > .title-unit { position: relative; top: auto; left: auto; }
+  .backen__img { left: 0; top: auto; width: 100%; margin-left: 0; }
+  .backen__body { width: auto; margin: 0 var(--gutter); }
 
   .mampf { height: auto; aspect-ratio: 1728 / 907; }
 
