@@ -123,10 +123,32 @@ button, input, textarea { font: inherit; color: inherit; }
 @media (min-width: 801px) { .display { white-space: nowrap; } }
 .title-unit--yellow { color: var(--c-yellow); }
 .title-unit--pink { color: var(--c-pink); }
+.title-unit--green { color: var(--c-green); }
 
 .body-unit { display: flex; flex-direction: column; align-items: flex-start; gap: calc(32 * var(--u)); gap: max(calc(32 * var(--u)), 16px); }
 .body-unit .lead { font-size: var(--fs-eyebrow); line-height: 0.9; text-transform: uppercase; }
 .body-unit p:not(.lead) { font-size: var(--fs-body); line-height: 1.2; }
+
+.legal-page {
+  min-height: 100vh;
+  padding: max(180px, calc(220 * var(--u))) var(--gutter) 120px;
+  display: flex; flex-direction: column; align-items: center; gap: 64px;
+}
+.legal-page .title-unit { width: 100%; }
+.legal-page .display { white-space: normal; }
+.legal-page__content { width: min(900px, 100%); }
+.legal-page__section + .legal-page__section { margin-top: 32px; }
+.legal-page__section h2 { font-size: var(--fs-body); font-weight: 900; margin-bottom: 16px; }
+.legal-page__section p { line-height: 1.45; }
+.legal-page__section p + p { margin-top: 16px; }
+.legal-page__list { display: flex; flex-direction: column; gap: 24px; padding-left: 1.5em; }
+.legal-page__list li { padding-left: 8px; }
+.legal-page__list li::marker { font-weight: 900; }
+.legal-page__list h2 { font-size: var(--fs-body); font-weight: 900; margin-bottom: 8px; }
+.legal-page__list li > p + p { margin-top: 12px; }
+.legal-page__list p, .legal-page__note { line-height: 1.45; }
+.legal-page__intro { margin-bottom: 24px; line-height: 1.45; }
+.legal-page__note { margin-top: 32px; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -493,8 +515,8 @@ position: relative; z-index: 1;
 .footer__title { font-size: var(--fs-body); margin-bottom: 1.2em; }
 .footer__small, .footer__address { font-size: var(--fs-tiny); line-height: 1.5; font-style: normal; }
 .footer__address { font-size: var(--fs-small); }
-.footer__small a, .footer__legal a, .footer__mail { text-decoration: none; }
-.footer__small a:hover, .footer__legal a:hover, .footer__mail:hover { text-decoration: underline; }
+.footer__small a, .footer__legal a, .footer__mail, .footer_title { text-decoration: none; }
+.footer__small a:hover, .footer__legal a:hover, .footer__mail:hover, .footer_title:hover { text-decoration: underline; }
 .footer__social { display: flex; gap: 20px; align-items: flex-start; }
 .footer__social .footer__title { margin-bottom: .6em; }
 .social { display: flex; gap: 8px; }

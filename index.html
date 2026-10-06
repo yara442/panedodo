@@ -227,7 +227,11 @@
         <p class="card__text">Ciabatta - das italienische Meisterwerk! Mit ihrer rustikalen Kruste und luftigen Inneren verführt sie den Gaumen. Perfekt für Panini, Bruschetta oder einfach pur geniessen. Ein Geschmackserlebnis, das dich in den sonnigen Süden versetzt!</p>
       </li>
       <li class="card">
-        <div class="card__media"><img src="assets/shop-11.webp" alt="" width="600" height="378" loading="lazy"><span class="badge">Ausverkauft</span></div>
+                <button class="card__media card__media--toggle" type="button" aria-label="Bild von Ciabattine wechseln" aria-pressed="false">
+          <img src="assets/shop-11.webp" alt="" width="600" height="378" loading="lazy">
+          <img class="card__image-alt" src="assets/shop-11_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
+          <span class="badge">Ausverkauft</span>
+        </button>
         <div class="card__head"><h3>Baguette</h3><span class="card__price">CHF 6.90</span></div>
         <p class="card__text">Paris, j’arrive! Die glutenfreien Mini-Baguettes von Panedodo sind knusprig und luftig aber alles andere als trocken. Genau wie ein traditionelles Baguette sein muss. Hol dir jetzt das Pariser Bäckerei-Erlebnis nach Hause.</p>
       </li>
@@ -315,23 +319,18 @@
         </div>
         <div class="footer__social">
           <div>
-            <p class="footer__title">Follow me</p>
-            <ul class="social">
-              <li><a href="#" aria-label="Instagram"><img src="assets/ig.svg" alt="" width="24" height="24"></a></li>
-              <li><a href="#" aria-label="Facebook"><img src="assets/fb.svg" alt="" width="24" height="24"></a></li>
-              <li><a href="#" aria-label="YouTube"><img src="assets/yt.svg" alt="" width="24" height="24"></a></li>
-            </ul>
+            <a class="footer_title" href="https://www.instagram.com/pane.dodo/">Follow me</a>
           </div>
           <a class="footer__mail" href="mailto:ciao@panedodo.ch">ciao@panedodo.ch</a>
         </div>
       </div>
       <div class="footer__legal">
         <span>© 2026, Panedodo</span>
-        <a href="#">Widerrufsrecht</a>
-        <a href="#">Datenschutzerklärung</a>
-        <a href="#">AGB</a>
+        <a href="widerrufsrecht.html">Widerrufsrecht</a>
+        <a href="datenschutzerklaerung.html">Datenschutzerklärung</a>
+        <a href="agb.html">AGB</a>
         <a href="#">Versand</a>
-        <a href="#">Impressum</a>
+        <a href="impressum.html">Impressum</a>
       </div>
     </footer>
   </div>

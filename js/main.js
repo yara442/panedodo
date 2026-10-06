@@ -140,7 +140,11 @@
       const product = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
       step.hidden = true;
       result.hidden = false;
-      result.textContent = RESULTS[product];
+      const resultText = RESULTS[product];
+      const headlineEnd = resultText.indexOf('!') + 1;
+      const headline = document.createElement('strong');
+      headline.textContent = resultText.slice(0, headlineEnd);
+      result.replaceChildren(headline, document.createTextNode(resultText.slice(headlineEnd)));
       next.textContent = 'Nochmals';
       next.disabled = false;
     });
