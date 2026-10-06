@@ -87,7 +87,7 @@
       <div class="body-unit backen__body">
         <p class="lead">Verpacken und<br>Frisch zu Da mama</p>
         <p>Vom heissen Ofen geht es ohne Umwege direkt zu Da Mama in der Churer Altstadt – und von dort zackig zu dir! Hier greife ich selbst beherzt zum Papiersack: Jedes einzelne Gebäck wird mit ganz viel Liebe von Hand verpackt. Ich finde dass echtes, ehrliches Handwerk am besten in einer umweltfreundlichen Hülle aufgehoben ist, die das Brot perfekt atmen lässt. So bleibt die Kruste genau so extrem knusprig und rösch, wie sie aus der Backstube kam. Das Warten hat damit endlich ein Ende und die Vorfreude darf offiziell steigen.</p>
-        <a class="btn btn--yellow" href="#faq">Mehr erfahren</a>
+        <a class="btn btn--yellow" href="https://www.damammabistro.com/de?srsltid=AU7gw4VRH6POhxDmT8XnfENf3p4I5NiO3fcsYeMDEDsCmp6ExcHRuqJh">Mehr erfahren</a>
       </div>
     </article>
 
@@ -288,17 +288,22 @@
         <p class="eyebrow">Kontakt</p>
         <h2 id="kontakt-title" class="display">Post für<br>mich</h2>
       </div>
-      <img class="kontakt__envelope" src="assets/kontakt.webp" alt="" width="1214" height="1350" aria-hidden="true">
-      <!-- TODO: action auf den eigenen Formular-Endpunkt setzen -->
-      <form class="kontakt__form" action="#" method="post">
-        <div class="field-row">
-          <label class="field"><span class="sr-only">Name</span><input type="text" name="name" placeholder="Name" autocomplete="name"></label>
-          <label class="field"><span class="sr-only">E-Mail (Pflichtfeld)</span><input type="email" name="email" placeholder="E-Mail*" autocomplete="email" required></label>
-        </div>
-        <label class="field"><span class="sr-only">Telefonnummer</span><input type="tel" name="phone" placeholder="Telefonnummer" autocomplete="tel"></label>
-        <label class="field"><span class="sr-only">Kommentar</span><textarea name="message" rows="1" placeholder="Kommentar"></textarea></label>
-        <button class="btn btn--blue" type="submit">Senden</button>
-      </form>
+      <div class="kontakt__stage">
+        <picture class="kontakt__envelope" aria-hidden="true">
+          <source srcset="assets/briefmarke.webp" media="(max-width: 800px)">
+          <img src="assets/kontakt.webp" alt="" width="1214" height="1350">
+        </picture>
+        <!-- TODO: action auf den eigenen Formular-Endpunkt setzen -->
+        <form class="kontakt__form" action="#" method="post">
+          <div class="field-row">
+            <label class="field"><span class="sr-only">Name</span><input type="text" name="name" placeholder="Name" autocomplete="name"></label>
+            <label class="field"><span class="sr-only">E-Mail (Pflichtfeld)</span><input type="email" name="email" placeholder="E-Mail*" autocomplete="email" required></label>
+          </div>
+          <label class="field"><span class="sr-only">Telefonnummer</span><input type="tel" name="phone" placeholder="Telefonnummer" autocomplete="tel"></label>
+          <label class="field"><span class="sr-only">Kommentar</span><textarea name="message" rows="1" placeholder="Kommentar"></textarea></label>
+          <button class="btn btn--blue" type="submit">Senden</button>
+        </form>
+      </div>
     </section>
 
     <footer class="footer">
