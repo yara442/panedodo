@@ -556,7 +556,7 @@ position: relative; z-index: 1;
 
   .stoerer {
     --mobile-badge-width: min(300px, calc(100vw - 88px));
-    left: auto; right: 0px; top: 90px;
+    left: auto; right: -30px; top: 90px;
     width: var(--mobile-badge-width);
     height: calc(var(--mobile-badge-width) * 290 / 576);
     min-width: 0;
