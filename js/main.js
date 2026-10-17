@@ -2,25 +2,69 @@
 (() => {
   /* ---------- Tabs (Panedodo-Weg) ---------- */
   const tabs = document.querySelector('.tabs');
+  const track = document.querySelector('.tabs__track');
   const links = [...document.querySelectorAll('.tabs__link')];
   const indicator = document.querySelector('.tabs__indicator');
+  const VARIANTS = { '0': 'Alt', a: 'A Pille', b: 'B Editorial', c: 'C Punkte', d: 'D Kompakt', e: 'E Bütten' };
+  const pad2 = n => String(n).padStart(2, '0');
+  let current = links[0];
+
+  // Variante D: kompakte Leiste mit Pfeilen und Segment-Fortschritt
+  let compactLabel;
+  const bars = [];
+  if (tabs && links.length) {
+    const compact = document.createElement('div');
+    compact.className = 'tabs__compact';
+    compact.innerHTML = '<button type="button" aria-label="Voriges Kapitel">←</button>' +
+      '<span class="tabs__compact-label" aria-live="polite"></span>' +
+      '<button type="button" aria-label="Nächstes Kapitel">→</button>';
+    const barWrap = document.createElement('div');
+    barWrap.className = 'tabs__bars';
+    links.forEach(() => { const i = document.createElement('i'); bars.push(i); barWrap.appendChild(i); });
+    track.prepend(compact);
+    track.appendChild(barWrap);
+    compactLabel = compact.querySelector('.tabs__compact-label');
+    const [prev, next] = compact.querySelectorAll('button');
+    const go = d => { const i = links.indexOf(current) + d; if (links[i]) links[i].click(); };
+    prev.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+  }
 
   function moveIndicator(link) {
-    if (!tabs || !link) return;
-    const navBox = tabs.getBoundingClientRect();
+    if (!tabs || !link || !indicator) return;
+    const tr = track.getBoundingClientRect();
     const box = link.getBoundingClientRect();
-    const width = Math.max(box.width, Math.min(170, navBox.width / links.length));
-    const left = Math.min(box.left - navBox.left, navBox.width - width);
+    const x = box.left - tr.left + track.scrollLeft;
+    let width = box.width, left = x;
+    if (tabs.dataset.nav === '0') {
+      width = Math.max(box.width, Math.min(170, tr.width / links.length));
+      left = Math.min(x, track.scrollWidth - width);
+    }
     indicator.style.width = `${width}px`;
     indicator.style.transform = `translateX(${left}px)`;
+    const CLIPS = [
+      'polygon(0 16%, 100% 0, 96% 100%, 4% 84%)', 'polygon(3% 0, 100% 10%, 97% 90%, 0 100%)',
+      'polygon(0 6%, 96% 0, 100% 94%, 5% 100%)', 'polygon(4% 10%, 100% 0, 95% 100%, 0 90%)',
+      'polygon(0 0, 97% 12%, 100% 100%, 3% 88%)', 'polygon(2% 12%, 100% 0, 98% 88%, 0 100%)'];
+    indicator.style.setProperty('--ind-clip', CLIPS[links.indexOf(link) % CLIPS.length]);
+    indicator.style.setProperty('--ind-c', getComputedStyle(link.parentElement).getPropertyValue('--tab-c'));
+    tabs.style.setProperty('--tab-c', getComputedStyle(link.parentElement).getPropertyValue('--tab-c'));
+    // aktiven Eintrag in der scrollbaren Leiste zentrieren (Mobile)
+    if (track.scrollWidth > track.clientWidth) {
+      track.scrollTo({ left: Math.max(0, x - (tr.width - box.width) / 2), behavior: 'smooth' });
+    }
   }
   function setActive(link) {
-    links.forEach(l => {
+    current = link;
+    links.forEach((l, i) => {
       const active = l === link;
       l.classList.toggle('is-active', active);
       if (active) l.setAttribute('aria-current', 'step'); else l.removeAttribute('aria-current');
+      if (bars[i]) bars[i].classList.toggle('is-done', i <= links.indexOf(link));
     });
+    if (compactLabel) compactLabel.innerHTML = `<b>${pad2(links.indexOf(link) + 1)} / ${pad2(links.length)}</b>${link.querySelector('.tabs__label').textContent}`;
     moveIndicator(link);
+    setTimeout(() => { if (current === link) moveIndicator(link); }, 450);
   }
   links.forEach(l => l.addEventListener('click', () => setActive(l)));
 
@@ -37,21 +81,29 @@
     }, { rootMargin: '-45% 0px -45% 0px' });
     steps.forEach(s => io.observe(s));
   }
-  window.addEventListener('resize', () => moveIndicator(document.querySelector('.tabs__link.is-active')));
-  requestAnimationFrame(() => moveIndicator(links[0]));
+  window.addEventListener('resize', () => moveIndicator(current));
 
-  document.querySelectorAll('.card__media--toggle').forEach(button => {
-    function toggleImage() {
-      const active = button.classList.toggle('is-alternate');
-      button.setAttribute('aria-pressed', String(active));
-    }
-    button.addEventListener('pointerup', event => {
-      if (event.pointerType !== 'mouse') toggleImage();
-    });
-    button.addEventListener('click', event => {
-      if (event.detail === 0) toggleImage();
-    });
-  });
+  // Varianten-Umschalter (zum Testen; ?nav=a|b|c|d|0 oder Klick unten links)
+  function setVariant(v) {
+    if (!VARIANTS[v] || !tabs) return;
+    tabs.dataset.nav = v;
+    try { localStorage.setItem('panedodo-nav', v); } catch (e) {}
+    document.querySelectorAll('.navpick button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+    requestAnimationFrame(() => moveIndicator(current));
+    setTimeout(() => moveIndicator(current), 450);
+  }
+  if (tabs) {
+    const pick = document.createElement('div');
+    pick.className = 'navpick';
+    pick.innerHTML = '<span style="padding:0 6px 0 4px;opacity:.6">Nav</span>' +
+      Object.entries(VARIANTS).map(([k, n]) => `<button type="button" data-v="${k}" aria-pressed="false">${n}</button>`).join('');
+    pick.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setVariant(b.dataset.v); });
+    document.body.appendChild(pick);
+    let v = new URLSearchParams(location.search).get('nav');
+    if (!VARIANTS[v]) { try { v = localStorage.getItem('panedodo-nav'); } catch (e) {} }
+    setVariant(VARIANTS[v] ? v : 'a');
+    setActive(links[0]);
+  }
 
   /* ---------- Quiz ---------- */
   const QUESTIONS = [
@@ -158,4 +210,89 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
+})();
+
+/* Kapitel-Bilder sanft einblenden */
+(() => {
+  const frames = document.querySelectorAll('.frame.reveal');
+  if (!frames.length || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  frames.forEach((f) => io.observe(f));
+})();
+
+/* Kontakt: Brief öffnet sich beim Scrollen (Klappe → Brief steigt auf → Formular erscheint) */
+(() => {
+  const section = document.querySelector('.kontakt');
+  const env = document.querySelector('[data-env]');
+  if (!section || !env || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const flap = env.querySelector('.env__flap');
+  const letter = env.querySelector('.env__letter');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const range = (p, a, b) => clamp((p - a) / (b - a));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const r = section.getBoundingClientRect();
+    const p = clamp(-r.top / (r.height - window.innerHeight));
+    const f = ease(range(p, .05, .30));
+    const rise = ease(range(p, .28, .58));
+    const form = ease(range(p, .56, .78));
+    const drop = ease(range(p, .55, .85));
+    section.style.setProperty('--flap', f.toFixed(4));
+    section.style.setProperty('--rise', rise.toFixed(4));
+    section.style.setProperty('--form', form.toFixed(4));
+    section.style.setProperty('--drop', drop.toFixed(4));
+    flap.dataset.side = f > .5 ? 'back' : 'front';
+    // Formular erst bedienbar, wenn der Brief offen ist
+    if (form > .85) letter.removeAttribute('inert'); else letter.setAttribute('inert', '');
+  }
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+
+/* Smooth Scrolling: träge Wheel-/Touch-Bewegung, Anker-Sprünge und weiches Einrasten an Kapitelanfängen */
+(() => {
+  if (!window.Lenis || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true });
+  window.__lenis = lenis;
+  const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+
+  const offsetFor = el => -(parseFloat(getComputedStyle(el).scrollMarginTop) || 0);
+
+  // Anker (Tabs, Logo, Nach-oben, Footer-Links) gleiten statt zu springen
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.getAttribute('href') === '#') return;
+    const target = a.getAttribute('href') === '#top' ? 0 : document.querySelector(a.getAttribute('href'));
+    if (target === null) return;
+    e.preventDefault();
+    lenis.scrollTo(target, { offset: target === 0 ? 0 : offsetFor(target), duration: 1.3, easing: t => 1 - Math.pow(1 - t, 4) });
+    history.pushState(null, '', a.getAttribute('href'));
+  });
+
+  // Sanftes Einrasten (wie scroll-snap proximity): kurz nach dem Scrollen zum nächsten Kapitelanfang, wenn nah genug
+  const snapTargets = () => [...document.querySelectorAll('.hero, .weg > .title-unit, .weg > .step, .quiz')];
+  let timer;
+  lenis.on('scroll', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (lenis.isScrolling && Math.abs(lenis.velocity) > 0.5) return;
+      const y = window.scrollY, vh = window.innerHeight;
+      let best = null, dist = Infinity;
+      snapTargets().forEach(el => {
+        const top = el.getBoundingClientRect().top + y + offsetFor(el);
+        const d = Math.abs(top - y);
+        if (d < dist) { dist = d; best = top; }
+      });
+      if (best !== null && dist > 4 && dist < vh * 0.15) lenis.scrollTo(best, { duration: 0.8, easing: t => 1 - Math.pow(1 - t, 3) });
+    }, 140);
+  });
 })();
