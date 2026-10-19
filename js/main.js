@@ -53,6 +53,87 @@
     });
   });
 
+  const heroStars = [...document.querySelectorAll('.hero__star, .hero__star-mobile')];
+  const baguette = document.querySelector('.hero__baguette');
+  const quizPaper = document.querySelector('.quiz__paper');
+  const quizBackground = document.querySelector('.quiz__bg');
+  const greenZone = document.querySelector('.green-zone');
+  const kontaktStage = document.querySelector('.kontakt__stage');
+  const kontaktForm = kontaktStage?.querySelector('.kontakt__form');
+  const miseIngredients = [...document.querySelectorAll('.mise__ingredient')];
+  const parallaxBubbles = [...document.querySelectorAll('.kneten__bubble, .aufgehen__bubble')];
+  const parallaxTitles = [...document.querySelectorAll('[data-title-parallax-range]')];
+  if (heroStars.length || baguette || quizPaper || quizBackground || greenZone || kontaktStage || miseIngredients.length || parallaxBubbles.length || parallaxTitles.length) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let framePending = false;
+    const updateParallax = () => {
+      const heroStarOffset = reducedMotion.matches ? 0 : Math.min(window.scrollY * 0.07, 60);
+      heroStars.forEach(star => star.style.setProperty('--hero-star-parallax-y', `${heroStarOffset}px`));
+      if (baguette) {
+        const baguetteOffset = reducedMotion.matches ? 0 : Math.min(window.scrollY * 0.12, 100);
+        baguette.style.setProperty('--parallax-y', `${baguetteOffset}px`);
+      }
+      if (quizPaper) {
+        const bounds = quizPaper.getBoundingClientRect();
+        const centerDistance = bounds.top + bounds.height / 2 - window.innerHeight / 2;
+        const paperOffset = reducedMotion.matches ? 0 : Math.max(-60, Math.min(60, -centerDistance * 0.08));
+        quizPaper.style.setProperty('--quiz-paper-parallax-y', `${paperOffset}px`);
+      }
+      if (quizBackground) {
+        const bounds = quizBackground.getBoundingClientRect();
+        const centerDistance = bounds.top + bounds.height / 2 - window.innerHeight / 2;
+        const backgroundOffset = reducedMotion.matches ? 0 : Math.max(-45, Math.min(45, -centerDistance * 0.08));
+        quizBackground.style.setProperty('--quiz-bg-parallax-y', `${backgroundOffset}px`);
+      }
+      if (greenZone) {
+        const bounds = greenZone.getBoundingClientRect();
+        const centerDistance = bounds.top - window.innerHeight * 0.55;
+        const backgroundOffset = reducedMotion.matches ? 0 : Math.max(-50, Math.min(50, -centerDistance * 0.06));
+        greenZone.style.setProperty('--green-bg-parallax-y', `${backgroundOffset}px`);
+      }
+      if (kontaktStage && kontaktForm) {
+        const bounds = kontaktForm.getBoundingClientRect();
+        const currentOffset = Number.parseFloat(kontaktStage.style.getPropertyValue('--kontakt-stage-parallax-y')) || 0;
+        const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
+        const kontaktOffset = reducedMotion.matches ? 0 : Math.max(-60, Math.min(60, -centerDistance * 0.08));
+        kontaktStage.style.setProperty('--kontakt-stage-parallax-y', `${kontaktOffset}px`);
+      }
+      miseIngredients.forEach(ingredient => {
+        const range = Number.parseFloat(ingredient.dataset.parallaxRange) || 0;
+        const bounds = ingredient.getBoundingClientRect();
+        const currentOffset = Number.parseFloat(ingredient.style.getPropertyValue('--mise-parallax-y')) || 0;
+        const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
+        const offset = reducedMotion.matches ? 0 : Math.max(-range, Math.min(range, -centerDistance * 0.08));
+        ingredient.style.setProperty('--mise-parallax-y', `${offset}px`);
+      });
+      parallaxBubbles.forEach(bubble => {
+        const range = Number.parseFloat(bubble.dataset.parallaxRange) || 0;
+        const bounds = bubble.getBoundingClientRect();
+        const currentOffset = Number.parseFloat(bubble.style.getPropertyValue('--bubble-parallax-y')) || 0;
+        const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
+        const offset = reducedMotion.matches ? 0 : Math.max(-range, Math.min(range, -centerDistance * 0.08));
+        bubble.style.setProperty('--bubble-parallax-y', `${offset}px`);
+      });
+      parallaxTitles.forEach(title => {
+        const range = Number.parseFloat(title.dataset.titleParallaxRange) || 0;
+        const bounds = title.getBoundingClientRect();
+        const currentOffset = Number.parseFloat(title.style.getPropertyValue('--title-parallax-y')) || 0;
+        const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
+        const offset = reducedMotion.matches ? 0 : Math.max(-range, Math.min(range, -centerDistance * 0.08));
+        title.style.setProperty('--title-parallax-y', `${offset}px`);
+      });
+      framePending = false;
+    };
+    const onScroll = () => {
+      if (framePending) return;
+      framePending = true;
+      requestAnimationFrame(updateParallax);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateParallax();
+  }
+
   /* ---------- Quiz ---------- */
   const QUESTIONS = [
     { q: '«Harte Schale, weicher Kern», trifft das auf dich zu?', a: [

@@ -104,6 +104,7 @@ button, input, textarea { font: inherit; color: inherit; }
   text-align: center;
   padding-inline: var(--gutter);
 }
+.display[data-title-parallax-range] { transform: translateY(var(--title-parallax-y, 0px)) rotate(-4deg); }
 .eyebrow {
   font-size: var(--fs-eyebrow);
   line-height: 0.9;
@@ -191,6 +192,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .hero__star {
   position: absolute; left: calc(30 * var(--u)); top: calc(100 * var(--u));
   width: calc(1668 * var(--u));
+  transform: translateY(var(--hero-star-parallax-y, 0px));
 }
 .hero__star-mobile { display: none; }
 .hero .display { line-height: 0.95;
@@ -200,7 +202,7 @@ position: relative; z-index: 1;
   position: absolute; z-index: 2;
   left: calc(342 * var(--u)); top: calc(249 * var(--u));
   width: calc(1044 * var(--u));
-  transform: scaleX(-1);
+  transform: translateY(var(--parallax-y, 0px)) scaleX(-1);
   pointer-events: none;
 }
 
@@ -248,8 +250,18 @@ position: relative; z-index: 1;
 .mise__title { color: var(--c-black); text-align: left; }
 .mise__img {
   position: relative; z-index: 2;
-  width: 100%; height: auto;
+  width: 100%; aspect-ratio: 1826 / 493;
 }
+.mise__ingredient {
+  position: absolute; max-width: none;
+  height: auto;
+  transform: translateY(var(--mise-parallax-y, 0px));
+}
+.mise__ingredient--hefe { left: 90.25%; top: 5.27%; width: 7.5%; }
+.mise__ingredient--mehl { left: 4%; top: 0; width: 30.28%; }
+.mise__ingredient--oel { left: 45.13%; top: 63.89%; width: 9.53%; }
+.mise__ingredient--salz { left: 54.55%; top: 48.07%; width: 6.02%; }
+.mise__ingredient--wasser { left: 66.15%; top: 13.18%; width: 17.96%; }
 .mise__body {
   position: relative; z-index: 3;
   width: calc(826 * var(--u));
@@ -260,7 +272,10 @@ position: relative; z-index: 1;
 /* Kneten */
 .kneten { height: auto; }
 .kneten__img { width: 100%; height: auto; }
-.kneten__bubble { position: absolute; left: calc(1260 * var(--u)); top: calc(200  * var(--u)); }
+.kneten__bubble {
+  position: absolute; left: calc(1260 * var(--u)); top: calc(200  * var(--u));
+  transform: translateY(var(--bubble-parallax-y, 0px));
+}
 
 
 /* Sprechblase */
@@ -291,7 +306,10 @@ position: relative; z-index: 1;
   left: calc(46 * var(--u)); top: calc(207 * var(--u));
   width: calc(1652 * var(--u));
 }
-.aufgehen__bubble { position: absolute; z-index: 2; left: calc(99 * var(--u)); top: calc(219 * var(--u)); }
+.aufgehen__bubble {
+  position: absolute; z-index: 2; left: calc(99 * var(--u)); top: calc(219 * var(--u));
+  transform: translateY(var(--bubble-parallax-y, 0px));
+}
 
 /* Backen & Verpacken */
 .backen {
@@ -323,7 +341,9 @@ position: relative; z-index: 1;
 .mampf {
   height: calc(865 * var(--u));
   display: flex; align-items: center; justify-content: center;
-  background: url("../assets/mampf.webp") center / contain no-repeat;
+  background:
+    url("../assets/stoerer.svg") center / contain no-repeat,
+    url("../assets/mampf_mouth.webp") center / contain no-repeat;
 }
 .mampf .title-unit { width: 100%; }
 
@@ -333,6 +353,7 @@ position: relative; z-index: 1;
   position: absolute; left: 0; right: 0; top: calc(328 * var(--u));
   height: calc(935 * var(--u));
   background: url("../assets/bg_quiz.svg") center / 100% 100% no-repeat;
+  transform: translateY(var(--quiz-bg-parallax-y, 0px));
 }
 .quiz .title-unit { z-index: 0; }
 .quiz__paper {
@@ -341,6 +362,7 @@ position: relative; z-index: 1;
   min-height: calc(502 * var(--u));
   padding: calc(77 * var(--u)) var(--gutter) calc(60 * var(--u));
   background: url("../assets/quiz-papier.webp") center top / 100% 100% no-repeat;
+  transform: translateY(var(--quiz-paper-parallax-y, 0px));
   display: flex; justify-content: center;
 }
 .quiz__frame {
@@ -393,8 +415,8 @@ position: relative; z-index: 1;
 .card__media--toggle:focus-visible .card__image-alt,
 .card__media--toggle.is-alternate .card__image-alt { opacity: 1; }
 .stoerer {
-  position: fixed; z-index: 3;
-  left: calc(1119 * var(--u)); top: calc(100 * var(--u));
+  position: fixed; z-index: 10000;
+  left: calc(1119 * var(--u)); top: calc(150 * var(--u));
   width: calc(576 * var(--u)); aspect-ratio: 576 / 290;
   min-width: 220px;
   background: url("../assets/stoerer.svg") center / 100% 100% no-repeat;
@@ -466,6 +488,7 @@ position: relative; z-index: 1;
   background:
     url("../assets/bg_green.svg") left top calc(208 * var(--u)) / 100% auto no-repeat,
     linear-gradient(transparent calc(208 * var(--u) + 26vw), var(--c-green) calc(208 * var(--u) + 26vw));
+  background-position: 0 calc(208 * var(--u) + var(--green-bg-parallax-y, 0px)), 0 0;
 }
 .kontakt {
   position: relative;
@@ -474,6 +497,10 @@ position: relative; z-index: 1;
 }
 .kontakt .title-unit { width: 100%; }
 .kontakt__stage { display: contents; }
+.kontakt__stage > .kontakt__envelope,
+.kontakt__stage > .kontakt__form {
+  transform: translateY(var(--kontakt-stage-parallax-y, 0px));
+}
 .kontakt__envelope {
   position: absolute; z-index: 1; display: block;
   left: calc(227 * var(--u)); top: calc(438 * var(--u));
@@ -547,7 +574,7 @@ position: relative; z-index: 1;
     display: block; position: absolute; z-index: 0;
     left: 5%; width: 90%; top: 150px; bottom: 0;
     background: url("../assets/star_mobile.webp") center / 100% 100% no-repeat;
-    transform: rotate(90deg);
+    transform: translateY(var(--hero-star-parallax-y, 0px)) rotate(90deg);
   }
   .hero__baguette { left: 12%; width: 76%; top: 230px; }
 

@@ -32,7 +32,7 @@
   <section class="weg" id="weg" aria-labelledby="weg-title">
     <div class="title-unit title-unit--yellow">
       <p class="eyebrow">Panedodo-Weg</p>
-      <h2 id="weg-title" class="display">Komm mit!</h2>
+      <h2 id="weg-title" class="display" data-title-parallax-range="30">Komm mit!</h2>
     </div>
 
     <nav class="tabs" aria-label="Schritte des Panedodo-Wegs">
@@ -49,7 +49,13 @@
     <!-- Mise en Place -->
     <article class="step mise" id="mise">
       <div class="mise__bg" aria-hidden="true"></div>
-      <img class="mise__img" src="assets/pandedodo-mise-en-place_02.png" alt="Zutaten für die Mise en Place: Kaffee, Mehl, Balsamico, Öl, Salz, Wasser und Hefe" width="1826" height="493">
+      <div class="mise__img" role="img" aria-label="Zutaten für die Mise en Place: Mehl, Öl, Salz, Wasser und Hefe">
+        <img class="mise__ingredient mise__ingredient--hefe" data-parallax-range="400" src="assets/mise_hefe.webp" alt="" aria-hidden="true">
+        <img class="mise__ingredient mise__ingredient--mehl" data-parallax-range="300" src="assets/mise_mehl.webp" alt="" aria-hidden="true">
+        <img class="mise__ingredient mise__ingredient--oel" data-parallax-range="30" src="assets/mise_oel.webp" alt="" aria-hidden="true">
+        <img class="mise__ingredient mise__ingredient--salz" data-parallax-range="5" src="assets/mise_salz.webp" alt="" aria-hidden="true">
+        <img class="mise__ingredient mise__ingredient--wasser" data-parallax-range="10" src="assets/mise_wasser.webp" alt="" aria-hidden="true">
+      </div>
       <div class="body-unit mise__body">
         <p class="lead mise__title">Mise en Place mit Maisstärke, Balsomico, Salz, Öl, Hefe und Wasser</p>
         <p>Hier trifft millimetergenaues abwägen auf fliegenden Mehlstaub und den ersten wachen Schluck Kaffee des Tages.</p>
@@ -59,10 +65,12 @@
     <!-- Kneten -->
     <article class="step kneten" id="kneten">
       <img class="kneten__img" src="assets/teig-kneten.webp" alt="Hände ziehen glutenfreien Teig auseinander" width="1728" height="1334">
-      <div class="bubble bubble--yellow kneten__bubble">
+      <div class="bubble bubble--yellow kneten__bubble" data-parallax-range="30">
         <span class="bubble__text">Teig<br>Kneten</span>
       </div>
+      
     </article>
+     
 
     <!-- Aufgehen -->
     <article class="step aufgehen" id="aufgehen">
@@ -71,7 +79,7 @@
         <span>Ab ins Bett</span>
       </h3>
       <img class="aufgehen__img" src="assets/aufgehen.webp" alt="Vier Teigkugeln, die aufgehen" width="1652" height="479">
-      <div class="bubble bubble--pink aufgehen__bubble">
+      <div class="bubble bubble--pink aufgehen__bubble" data-parallax-range="45">
         <span class="bubble__text">zzz...</span>
       </div>
     </article>
@@ -128,7 +136,7 @@
   <section class="shop" id="shop" aria-labelledby="shop-title">
     <div class="title-unit">
       <p class="eyebrow">Shop</p>
-      <h2 id="shop-title" class="display" style="margin-bottom: 100px;">Schon<br>Hunger?</h2>
+      <h2 id="shop-title" class="display" style="margin-bottom: 100px;" data-title-parallax-range="40">Schon<br>Hunger?</h2>
     </div>
 
     <aside class="stoerer" role="note">
@@ -251,7 +259,7 @@
   <section class="faq" id="faq" aria-labelledby="faq-title">
     <div class="title-unit title-unit--yellow">
       <p class="eyebrow">FAQ</p>
-      <h2 id="faq-title" class="display" style="margin-bottom: 100px;">Hää Was?!</h2>
+      <h2 id="faq-title" class="display" style="margin-bottom: 100px;" data-title-parallax-range="35">Hää Was?!</h2>
     </div>
 
     <div class="faq__container">
