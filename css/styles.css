@@ -371,7 +371,7 @@ position: relative; z-index: 1;
 
 .gf__bg {
   position: absolute; inset: 0;
-  background: url("../assets/gf-brot-bg.png") center / 100% 100% no-repeat;
+  background: url("../assets/bg-gf-brot.webp") center / 100% 100% no-repeat;
   z-index: 0;
 }
 
