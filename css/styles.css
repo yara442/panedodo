@@ -121,6 +121,11 @@ button, input, textarea { font: inherit; color: inherit; }
   text-wrap: balance;
   transform: rotate(-4deg);
 }
+.display--sm {
+  font-size: max(calc(200 * var(--u)), 2.5rem);
+  line-height: 0.95;
+  color: var(--c-black);
+}
 @media (min-width: 801px) { .display { white-space: nowrap; } }
 .title-unit--yellow { color: var(--c-yellow); }
 .title-unit--pink { color: var(--c-pink); }
@@ -237,36 +242,123 @@ position: relative; z-index: 1;
 
 .step { position: relative; }
 
-/* Mise en Place */
+/* Als alles begann (Mise en Place) */
 .mise {
-  position:relative;
+  position: relative;
   margin-top: max(calc(32 * var(--u)), 8px);
   margin-bottom: -1px;
+  padding: calc(64 * var(--u)) 0 calc(120 * var(--u));
 }
 .mise__bg {
   position: absolute; inset: 0;
   background: url("../assets/bg_mise.webp") center / 100% 100% no-repeat;
+  z-index: 0;
 }
-.mise__title { color: var(--c-black); text-align: left; }
-.mise__img {
-  position: relative; z-index: 2;
-  width: 100%; aspect-ratio: 1826 / 493;
+.mise__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: max(calc(48 * var(--u)), 32px);
 }
-.mise__ingredient {
-  position: absolute; max-width: none;
+.mise__header {
+  text-align: center;
+}
+.mise__title {
+  display: inline-block;
+  color: var(--c-black);
+}
+
+/* =========================================================
+   Universal 12-Column Grid (Figma: 12 Spalten, 15px Gap, 30px Gutter)
+   ========================================================= */
+.grid-12,
+.body-element {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: max(calc(15 * var(--u)), 15px);
+  row-gap: max(calc(32 * var(--u)), 24px);
+  align-items: start;
+  width: 100%;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+
+/* Fallback-Spannweite (default: 6 Spalten) oder direkt überschreibbar */
+.grid-12 > *,
+.body-element > * {
+  grid-column: var(--col, var(--col-start, auto) / span var(--col-span, 6));
+}
+
+/* Spalten-Utility-Klassen */
+.col-1  { grid-column: auto / span 1; }
+.col-2  { grid-column: auto / span 2; }
+.col-3  { grid-column: auto / span 3; }
+.col-4  { grid-column: auto / span 4; }
+.col-5  { grid-column: auto / span 5; }
+.col-6  { grid-column: auto / span 6; }
+.col-7  { grid-column: auto / span 7; }
+.col-8  { grid-column: auto / span 8; }
+.col-9  { grid-column: auto / span 9; }
+.col-10 { grid-column: auto / span 10; }
+.col-11 { grid-column: auto / span 11; }
+.col-12 { grid-column: 1 / -1; }
+
+.col-start-1  { grid-column-start: 1; }
+.col-start-2  { grid-column-start: 2; }
+.col-start-3  { grid-column-start: 3; }
+.col-start-4  { grid-column-start: 4; }
+.col-start-5  { grid-column-start: 5; }
+.col-start-6  { grid-column-start: 6; }
+.col-start-7  { grid-column-start: 7; }
+.col-start-8  { grid-column-start: 8; }
+.col-start-9  { grid-column-start: 9; }
+.col-start-10 { grid-column-start: 10; }
+.col-start-11 { grid-column-start: 11; }
+.col-start-12 { grid-column-start: 12; }
+
+/* Bilder-Grid: Teilt die 6 Spalten in 2 Spalten (Quer) + 4 Spalten (Hoch) */
+.body-element__media {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: max(calc(15 * var(--u)), 15px);
+  align-items: start;
+  width: 100%;
+}
+.body-element__img-quer-wrap {
+  grid-column: 1 / span 2;
+  width: 100%;
+}
+.body-element__img-hoch-wrap {
+  grid-column: 3 / span 4;
+  width: 100%;
+}
+.body-element__img {
+  width: 100%;
   height: auto;
-  transform: translateY(var(--mise-parallax-y, 0px));
+  display: block;
 }
-.mise__ingredient--hefe { left: 90.25%; top: 5.27%; width: 7.5%; }
-.mise__ingredient--mehl { left: 4%; top: 0; width: 30.28%; }
-.mise__ingredient--oel { left: 45.13%; top: 63.89%; width: 9.53%; }
-.mise__ingredient--salz { left: 54.55%; top: 48.07%; width: 6.02%; }
-.mise__ingredient--wasser { left: 66.15%; top: 13.18%; width: 17.96%; }
-.mise__body {
-  position: relative; z-index: 3;
-  width: calc(826 * var(--u));
-  margin: calc(64 * var(--u)) auto 0;
-  padding-bottom: calc(384 * var(--u));
+.body-element__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: max(calc(32 * var(--u)), 20px);
+}
+.body-element__title {
+  font-family: var(--f-body);
+  font-size: max(calc(72 * var(--u)), 1.75rem);
+  font-weight: 500;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--c-black);
+  margin: 0;
+}
+.body-element__desc {
+  font-family: var(--f-body);
+  font-size: var(--fs-body);
+  line-height: 1.2;
+  color: var(--c-black);
+  margin: 0;
 }
 
 /* Kneten */
@@ -275,6 +367,12 @@ position: relative; z-index: 1;
 .kneten__bubble {
   position: absolute; left: calc(1260 * var(--u)); top: calc(200  * var(--u));
   transform: translateY(var(--bubble-parallax-y, 0px));
+}
+
+.gf__bg {
+  position: absolute; inset: 0;
+  background: url("../assets/gf-brot-bg.png") center / 100% 100% no-repeat;
+  z-index: 0;
 }
 
 
@@ -581,12 +679,23 @@ position: relative; z-index: 1;
   .tabs { --tabs-padding-top: 24px; }
   .tabs__list { justify-content: flex-start; gap: 24px; }
 
-  /* Collagen werden zu gestapelten Blöcken */
-  .mise { height: auto; margin-top: 0; padding: 0 0 56px; }
+  /* Als alles begann Mobile */
+  .mise { height: auto; margin-top: 0; padding: 40px 0 56px; }
   .mise__bg { background-color: var(--c-lavender); }
-  .mise { padding-top: 28px; }
-  .mise__img { margin-bottom: 0; }
-  .mise__body, .backen__body {
+  .display--sm { font-size: clamp(2.2rem, 9vw, 3.2rem); white-space: normal; }
+  .grid-12,
+  .body-element {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .grid-12 > *,
+  .body-element > * {
+    grid-column: 1 / -1 !important;
+  }
+  .body-element__title {
+    font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  }
+  .backen__body {
     position: relative; left: auto; top: auto;
     width: auto; margin: 32px var(--gutter) 0;
   }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panedodo – 100% glutenfrei. In Crust We Trust.</title>
   <meta name="description" content="Panedodo ist eine glutenfreie Hausbäckerei im Raum Chur: online bestellen, vor Ort abholen.">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=1.1">
 </head>
 <body>
 
@@ -37,61 +37,207 @@
 
     <nav class="tabs" aria-label="Schritte des Panedodo-Wegs">
       <ul class="tabs__list">
-        <li><a class="tabs__link is-active" href="#mise">Mise en Place</a></li>
-        <li><a class="tabs__link" href="#kneten">Kneten</a></li>
-        <li><a class="tabs__link" href="#aufgehen">Teig aufgehen lassen</a></li>
-        <li><a class="tabs__link" href="#backen">Backen &amp; Verpacken</a></li>
-        <li><a class="tabs__link" href="#geniessen">Geniessen!</a></li>
+        <li><a class="tabs__link is-active" href="#anfang">Anfang</a></li>
+        <li><a class="tabs__link" href="#gf-brot">kei GF-Brot</a></li>
+        <li><a class="tabs__link" href="#selbst">Selbst ist die Frau</a></li>
+        <li><a class="tabs__link" href="#panedodo">Panedodo in Chur</a></li>
+        <li><a class="tabs__link" href="#zukunft">Zukunft</a></li>
       </ul>
       <span class="tabs__indicator" aria-hidden="true"></span>
     </nav>
 
-    <!-- Mise en Place -->
-    <article class="step mise" id="mise">
+    <!-- Als alles begann -->
+    <article class="step mise" id="anfang">
       <div class="mise__bg" aria-hidden="true"></div>
-      <div class="mise__img" role="img" aria-label="Zutaten für die Mise en Place: Mehl, Öl, Salz, Wasser und Hefe">
-        <img class="mise__ingredient mise__ingredient--hefe" data-parallax-range="400" src="assets/mise_hefe.webp" alt="" aria-hidden="true">
-        <img class="mise__ingredient mise__ingredient--mehl" data-parallax-range="300" src="assets/mise_mehl.webp" alt="" aria-hidden="true">
-        <img class="mise__ingredient mise__ingredient--oel" data-parallax-range="30" src="assets/mise_oel.webp" alt="" aria-hidden="true">
-        <img class="mise__ingredient mise__ingredient--salz" data-parallax-range="5" src="assets/mise_salz.webp" alt="" aria-hidden="true">
-        <img class="mise__ingredient mise__ingredient--wasser" data-parallax-range="10" src="assets/mise_wasser.webp" alt="" aria-hidden="true">
-      </div>
-      <div class="body-unit mise__body">
-        <p class="lead mise__title">Mise en Place mit Maisstärke, Balsomico, Salz, Öl, Hefe und Wasser</p>
-        <p>Hier trifft millimetergenaues abwägen auf fliegenden Mehlstaub und den ersten wachen Schluck Kaffee des Tages.</p>
+
+      <div class="mise__content">
+        <!--<div class="title-unit mise__header">
+          <h2 class="display display--sm mise__title" style="color:white">Als alles Begann</h2>
+        </div> -->
+
+        <!-- Universal 12-Column Grid (Figma: 12 Cols, 15px Gap, 30px Gutter) -->
+        <div class="grid-12 body-element">
+          <!-- Bilder: Spalten 1 bis 6 (Quer: Spalten 1–2, Hoch: Spalten 3–6) -->
+          <div class="body-element__media col-6 col-start-1" style="grid-column: 1 / span 6;">
+            <div class="body-element__img-quer-wrap col-2 col-start-1" style="grid-column: 1 / span 2;">
+              <img src="assets/panedodo-placeholderimg-quer.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="body-element__img body-element__img--quer">
+            </div>
+            <div class="body-element__img-hoch-wrap col-4 col-start-3" style="grid-column: 3 / span 4;">
+              <img src="assets/panedodo-placeholderimg-hoch.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="body-element__img body-element__img--hoch">
+            </div>
+          </div>
+
+          <!-- Text: Spalten 7 bis 12 -->
+          <div class="body-element__text body-unit col-6 col-start-7" style="grid-column: 7 / span 6;">
+            <h3 class="lead body-element__title">Als alles Begann </h3>
+            <p class="body-element__desc">2015 erhält Dora, die Gründerin von Panedodo, die Diagnose Zöliakie. Damals lebt sie noch in Italien, wo das glutenfreie Angebot schon gross ist und immer weiter wächst.</p>
+          </div>
+        </div>
       </div>
     </article>
 
-    <!-- Kneten -->
-    <article class="step kneten" id="kneten">
-      <img class="kneten__img" src="assets/teig-kneten.webp" alt="Hände ziehen glutenfreien Teig auseinander" width="1728" height="1334">
-      <div class="bubble bubble--yellow kneten__bubble" data-parallax-range="30">
-        <span class="bubble__text">Teig<br>Kneten</span>
-      </div>
-      
-    </article>
-     
+    <!-- Kein GF-Brot-->
+    <article class="step mise" id="gf-brot" style="margin-top: 0;">
+      <div class="gf__bg" aria-hidden="true"></div>
 
-    <!-- Aufgehen -->
-    <article class="step aufgehen" id="aufgehen">
-      <h3 class="display aufgehen__title">
-        <span>und Jetzt</span>
-        <span>Ab ins Bett</span>
-      </h3>
-      <img class="aufgehen__img" src="assets/aufgehen.webp" alt="Vier Teigkugeln, die aufgehen" width="1652" height="479">
-      <div class="bubble bubble--pink aufgehen__bubble" data-parallax-range="45">
+      <div class="mise__content">
+        <div class="title-unit mise__header">
+          <h2 class="display display--sm mise__title" style="color: #ffff">Wo ist das <br>Glutenfreite Brot?</h2>
+        </div>
+
+        <!-- Universal 12-Column Grid (Figma: 12 Cols, 15px Gap, 30px Gutter) -->
+        <div class="grid-12 body-element" style="margin-top: -40px;">
+          <!-- Bilder: Spalten 1 bis 6 (Quer: Spalten 1–2, Hoch: Spalten 3–6) -->
+          <div class="body-element__media col-6 col-start-1" style="grid-column: 1 / span 6;">
+            <div class="body-element__img-quer-wrap col-2 col-start-1" style="grid-column: 1 / span 2;">
+              <img src="assets/panedodo-placeholderimg-quer.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="body-element__img body-element__img--quer">
+            </div>
+            <div class="body-element__img-hoch-wrap col-4 col-start-3" style="grid-column: 3 / span 4;">
+              <img src="assets/panedodo-placeholderimg-hoch.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="body-element__img body-element__img--hoch">
+            </div>
+          </div>
+
+          <!-- Text: Spalten 7 bis 12 -->
+          <div class="body-element__text body-unit col-6 col-start-7" style="grid-column: 7 / span 6;">
+            <h3 class="lead body-element__title">2016: Umzug in die Schweiz</h3>
+            <p class="body-element__desc">2016 zieht Dora in die Schweiz und merkt schnell: Für Zölis gibt’s hier nicht viel zu holen. In den grossen Supermärkten stehen ein paar traurige, abgepackte Produkte im Regal. Im Reformhaus ist die Auswahl etwas grösser – doch auch das wird ein paar Jahre später Konkurs anmelden. Und glutenfreie Cafés oder Bäckereien? Fehlanzeige! Was also tun in dieser glutenfreien Wüste?</p>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Selbst ist die Frau -->
+  <article class="step mise" id="gf-brot" style="margin-top: 0;">
+      <div class="gf__bg" aria-hidden="true"></div>
+
+      <div class="mise__content">
+        <div class="title-unit mise__header">
+          <h2 class="display display--sm mise__title" style="color: #ffff">Wo ist das <br>Glutenfreite Brot?</h2>
+        </div>
+
+        <!-- Universal 12-Column Grid (Figma: 12 Cols, 15px Gap, 30px Gutter) -->
+        <div class="grid-12 body-element" style="margin-top: -40px;">
+          <!-- Bilder: Spalten 1 bis 6 (Quer: Spalten 1–2, Hoch: Spalten 3–6) -->
+          <div class="body-element__media col-6 col-start-1" style="grid-column: 1 / span 6;">
+            <div class="body-element__img-quer-wrap col-2 col-start-1" style="grid-column: 1 / span 2;">
+              <img src="assets/panedodo-placeholderimg-quer.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="body-element__img body-element__img--quer">
+            </div>
+            <div class="body-element__img-hoch-wrap col-4 col-start-3" style="grid-column: 3 / span 4;">
+              <img src="assets/panedodo-placeholderimg-hoch.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="body-element__img body-element__img--hoch">
+            </div>
+          </div>
+
+          <!-- Text: Spalten 7 bis 12 -->
+          <div class="body-element__text body-unit col-6 col-start-7" style="grid-column: 7 / span 6;">
+            <h3 class="lead body-element__title">2016: Umzug in die Schweiz</h3>
+            <p class="body-element__desc">2016 zieht Dora in die Schweiz und merkt schnell: Für Zölis gibt’s hier nicht viel zu holen. In den grossen Supermärkten stehen ein paar traurige, abgepackte Produkte im Regal. Im Reformhaus ist die Auswahl etwas grösser – doch auch das wird ein paar Jahre später Konkurs anmelden. Und glutenfreie Cafés oder Bäckereien? Fehlanzeige! Was also tun in dieser glutenfreien Wüste?</p>
+          </div>
+        </div>
+           <div class="bubble bubble--pink aufgehen__bubble" data-parallax-range="45">
         <span class="bubble__text">zzz...</span>
       </div>
+      </div>
+
     </article>
 
-    <!-- Backen & Verpacken -->
-    <article class="step backen" id="backen">
-      <div class="backen__bg" aria-hidden="true"></div>
-      <div class="title-unit">
-        <p class="eyebrow">Ab in den Ofen. plötzlich wird es</p>
-        <h3 class="display">Heiss!</h3>
+ 
+
+    <!-- Panedodo in Chur -->
+    <article class="step mise" id="gf-brot" style="margin-top: 0;">
+      <div class="gf__bg" aria-hidden="true"></div>
+
+      <div class="mise__content">
+        <div class="title-unit mise__header">
+          <h2 class="display display--sm mise__title" style="color: #ffff">Wo ist das <br>Glutenfreite Brot?</h2>
+        </div>
+
+        <!-- Universal 12-Column Grid (Figma: 12 Cols, 15px Gap, 30px Gutter) -->
+        <div class="grid-12 body-element" style="margin-top: -40px;">
+          <!-- Bilder: Spalten 1 bis 6 (Quer: Spalten 1–2, Hoch: Spalten 3–6) -->
+          <div class="body-element__media col-6 col-start-1" style="grid-column: 1 / span 6;">
+            <div class="body-element__img-quer-wrap col-2 col-start-1" style="grid-column: 1 / span 2;">
+              <img src="assets/panedodo-placeholderimg-quer.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="body-element__img body-element__img--quer">
+            </div>
+            <div class="body-element__img-hoch-wrap col-4 col-start-3" style="grid-column: 3 / span 4;">
+              <img src="assets/panedodo-placeholderimg-hoch.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="body-element__img body-element__img--hoch">
+            </div>
+          </div>
+
+          <!-- Text: Spalten 7 bis 12 -->
+          <div class="body-element__text body-unit col-6 col-start-7" style="grid-column: 7 / span 6;">
+            <h3 class="lead body-element__title">2016: Umzug in die Schweiz</h3>
+            <p class="body-element__desc">2016 zieht Dora in die Schweiz und merkt schnell: Für Zölis gibt’s hier nicht viel zu holen. In den grossen Supermärkten stehen ein paar traurige, abgepackte Produkte im Regal. Im Reformhaus ist die Auswahl etwas grösser – doch auch das wird ein paar Jahre später Konkurs anmelden. Und glutenfreie Cafés oder Bäckereien? Fehlanzeige! Was also tun in dieser glutenfreien Wüste?</p>
+          </div>
+        </div>
       </div>
-      <img class="backen__img" id="formen" src="assets/backen.webp" alt="Ein roher Zopf und zwei gebackene Laugenbrezeln" width="1800" height="622">
+
+    </article>
+
+      <!-- Panedodo in Chur -->
+    <article class="step mise" id="gf-brot" style="margin-top: 0;">
+      <div class="gf__bg" aria-hidden="true"></div>
+
+      <div class="mise__content">
+        <div class="title-unit mise__header">
+          <h2 class="display display--sm mise__title" style="color: #ffff">Wo ist das <br>Glutenfreite Brot?</h2>
+        </div>
+
+        <!-- Universal 12-Column Grid (Figma: 12 Cols, 15px Gap, 30px Gutter) -->
+        <div class="grid-12 body-element" style="margin-top: -40px;">
+          <!-- Bilder: Spalten 1 bis 6 (Quer: Spalten 1–2, Hoch: Spalten 3–6) -->
+          <div class="body-element__media col-6 col-start-1" style="grid-column: 1 / span 6;">
+            <div class="body-element__img-quer-wrap col-2 col-start-1" style="grid-column: 1 / span 2;">
+              <img src="assets/panedodo-placeholderimg-quer.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="body-element__img body-element__img--quer">
+            </div>
+            <div class="body-element__img-hoch-wrap col-4 col-start-3" style="grid-column: 3 / span 4;">
+              <img src="assets/panedodo-placeholderimg-hoch.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="body-element__img body-element__img--hoch">
+            </div>
+          </div>
+
+          <!-- Text: Spalten 7 bis 12 -->
+          <div class="body-element__text body-unit col-6 col-start-7" style="grid-column: 7 / span 6;">
+            <h3 class="lead body-element__title">2016: Umzug in die Schweiz</h3>
+            <p class="body-element__desc">2016 zieht Dora in die Schweiz und merkt schnell: Für Zölis gibt’s hier nicht viel zu holen. In den grossen Supermärkten stehen ein paar traurige, abgepackte Produkte im Regal. Im Reformhaus ist die Auswahl etwas grösser – doch auch das wird ein paar Jahre später Konkurs anmelden. Und glutenfreie Cafés oder Bäckereien? Fehlanzeige! Was also tun in dieser glutenfreien Wüste?</p>
+          </div>
+        </div>
+      </div>
+
+    </article>
+<!--- 
+    Panedodo in Chur
+    <article class="step backen" id="panedodo">
+      <article class="step mise" id="gf-brot" style="margin-top: 0;">
+      <div class="gf__bg" aria-hidden="true"></div>
+
+      <div class="mise__content">
+        <div class="title-unit mise__header">
+          <h2 class="display display--sm mise__title" style="color: #ffff">Wo ist das <br>Glutenfreite Brot?</h2>
+        </div>
+
+        Universal 12-Column Grid (Figma: 12 Cols, 15px Gap, 30px Gutter) 
+        <div class="grid-12 body-element" style="margin-top: -40px;">
+          Bilder: Spalten 1 bis 6 (Quer: Spalten 1–2, Hoch: Spalten 3–6) 
+          <div class="body-element__media col-6 col-start-1" style="grid-column: 1 / span 6;">
+            <div class="body-element__img-quer-wrap col-2 col-start-1" style="grid-column: 1 / span 2;">
+              <img src="assets/panedodo-placeholderimg-quer.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="body-element__img body-element__img--quer">
+            </div>
+            <div class="body-element__img-hoch-wrap col-4 col-start-3" style="grid-column: 3 / span 4;">
+              <img src="assets/panedodo-placeholderimg-hoch.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="body-element__img body-element__img--hoch">
+            </div>
+          </div>
+
+           Text: Spalten 7 bis 12 
+          <div class="body-element__text body-unit col-6 col-start-7" style="grid-column: 7 / span 6;">
+            <h3 class="lead body-element__title">2016: Umzug in die Schweiz</h3>
+            <p class="body-element__desc">2016 zieht Dora in die Schweiz und merkt schnell: Für Zölis gibt’s hier nicht viel zu holen. In den grossen Supermärkten stehen ein paar traurige, abgepackte Produkte im Regal. Im Reformhaus ist die Auswahl etwas grösser – doch auch das wird ein paar Jahre später Konkurs anmelden. Und glutenfreie Cafés oder Bäckereien? Fehlanzeige! Was also tun in dieser glutenfreien Wüste?</p>
+          </div>
+        </div>
+      </div>
+      
+
+    </article>
+      <div class="backen__bg" aria-hidden="true"></div>
       <div class="body-unit backen__body">
         <p class="lead">Verpacken und<br>Frisch zu Da mama</p>
         <p>Vom heissen Ofen geht es ohne Umwege direkt zu Da Mama in der Churer Altstadt – und von dort zackig zu dir! Hier greife ich selbst beherzt zum Papiersack: Jedes einzelne Gebäck wird mit ganz viel Liebe von Hand verpackt. Ich finde dass echtes, ehrliches Handwerk am besten in einer umweltfreundlichen Hülle aufgehoben ist, die das Brot perfekt atmen lässt. So bleibt die Kruste genau so extrem knusprig und rösch, wie sie aus der Backstube kam. Das Warten hat damit endlich ein Ende und die Vorfreude darf offiziell steigen.</p>
@@ -99,15 +245,15 @@
       </div>
     </article>
 
-    <!-- Geniessen -->
-    <article class="step mampf" id="geniessen">
+     Zukunft 
+    <article class="step mampf" id="zukunft">
       <div class="title-unit">
         <p class="eyebrow">und zum Schluss</p>
         <h3 class="display">Mampf!</h3>
       </div>
     </article>
   </section>
-
+   -->
   <!-- ============ QUIZ ============ -->
   <section class="quiz" id="quiz" aria-labelledby="quiz-title">
     <div class="quiz__bg" aria-hidden="true"></div>
@@ -133,127 +279,7 @@
   </section>
 
   <!-- ============ SHOP ============ -->
-  <section class="shop" id="shop" aria-labelledby="shop-title">
-    <div class="title-unit">
-      <p class="eyebrow">Shop</p>
-      <h2 id="shop-title" class="display" style="margin-bottom: 100px;" data-title-parallax-range="40">Schon<br>Hunger?</h2>
-    </div>
 
-    <aside class="stoerer" role="note">
-      <p>Panedodo ist vorübergehend geschlossen, ich back aber schon an den nächsten Ideen!</p>
-    </aside>
-
-    <ul class="shop__grid">
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Oliven-Baguette wechseln" aria-pressed="false">
-          <img src="assets/shop-01.webp" alt="" width="600" height="376" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-01_2.webp" alt="" width="600" height="376" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Oliven-Baguette</h3><span class="card__price">CHF 6.90</span></div>
-        <p class="card__text">Die südländische Version des französischen Klassikers! Die Olivenbaguettes von Panedodo sind aussen knusprig und innen feucht, genau wie ein traditionelles Baguette sein muss. Geniesse sie bei einem ausgedehnten Brunch oder zum mediterranen Apéro.</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von 1. August-Weggli wechseln" aria-pressed="false">
-          <img src="assets/shop-02.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-02_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>1. August-Weggli</h3><span class="card__price">CHF 6.90</span></div>
-        <p class="card__text">Die perfekten Begleiter für den 1. August-Brunch! Weich und zart, sind mit Butter und Konfi oder auch einfach nature ein wahrer Genuss!</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Weihnachtsguetzli wechseln" aria-pressed="false">
-          <img src="assets/shop-03.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-03_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Weihnachtsguetzli</h3><span class="card__price">CHF 15.90</span></div>
-        <p class="card__text">Was wären die Adventszeit und Weihnachten ohne den feinen Duft von selbst gebackenen Guetzli? Die Weihnachtsguetzli von Panedodo sind alle liebevoll von Hand gemacht und machen glutenfreien Genuss auch an Weihnachten möglich!</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Nusstorte wechseln" aria-pressed="false">
-          <img src="assets/shop-04.webp" alt="" width="600" height="377" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-04_2.webp" alt="" width="600" height="377" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Nusstorte</h3><span class="card__price">CHF 23.00</span></div>
-        <p class="card__text">Der Klassiker aus Graubünden, der immer schmeckt. Egal ob als Zvieri zum Kaffee oder als Dessert nach dem Essen.</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Laugenbrötli wechseln" aria-pressed="false">
-          <img src="assets/shop-05.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-05_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Laugenbrötli</h3><span class="card__price">CHF 6.50</span></div>
-        <p class="card__text">Silserbrötli, Silserli, Laugenbrötchen – Wie auch immer du sie nennen magst, sind sie mit ihrer kastanienbraunen und glänzenden Kruste und dem saftigen, zarten Inneren einfach unwiderstehlich.</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Party-Brötchen wechseln" aria-pressed="false">
-          <img src="assets/shop-06.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-06_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Party-Brötchen</h3><span class="card__price">CHF 6.90</span></div>
-        <p class="card__text">Sie tanzen im Mund wie Konfetti und versprechen Geschmacksexplosionen in allen Farben. Mix &amp; Match nach Herzenslust – die Party startet im Bauch!</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Laugenbrezel wechseln" aria-pressed="false">
-          <img src="assets/shop-07.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-07_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Laugenbrezel</h3><span class="card__price">CHF 6.90</span></div>
-        <p class="card__text">Mit ihrer dünnen, kastanienbraunen und glänzenden Kruste und dem saftigen, zarten Inneren ist eine Laugenbrezel einfach unwiderstehlich. Gönne dir diesen Genuss endlich glutenfrei und erlebe das Wiesn-Feeling in vollen Zügen!</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Butterzopf wechseln" aria-pressed="false">
-          <img src="assets/shop-08.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-08_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Butterzopf</h3><span class="card__price">CHF 7.90</span></div>
-        <p class="card__text">Der feine glutenfreie Zopf von Panedodo ist perfekt für jeden Brunch oder gemütlichen Nachmittag. Er ist weich, zart und lässt sich wunderbar zupfen.</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Rosmarin-Focaccia wechseln" aria-pressed="false">
-          <img src="assets/shop-09.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-09_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Rosmarin-Focaccia</h3><span class="card__price">CHF 9.90</span></div>
-        <p class="card__text">Hol dir ein Stück Sonne aus Italien! Mit mediterranem Rosmarin und italienischem Olivenöl verführt die Focaccia von Panedodo deinen Gaumen und sorgt für puren Genuss. Mamma mia!</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Ciabattine wechseln" aria-pressed="false">
-          <img src="assets/shop-10.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-10_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Ciabattine</h3><span class="card__price">CHF 5.90</span></div>
-        <p class="card__text">Ciabatta - das italienische Meisterwerk! Mit ihrer rustikalen Kruste und luftigen Inneren verführt sie den Gaumen. Perfekt für Panini, Bruschetta oder einfach pur geniessen. Ein Geschmackserlebnis, das dich in den sonnigen Süden versetzt!</p>
-      </li>
-      <li class="card">
-                <button class="card__media card__media--toggle" type="button" aria-label="Bild von Ciabattine wechseln" aria-pressed="false">
-          <img src="assets/shop-11.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-11_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Baguette</h3><span class="card__price">CHF 6.90</span></div>
-        <p class="card__text">Paris, j’arrive! Die glutenfreien Mini-Baguettes von Panedodo sind knusprig und luftig aber alles andere als trocken. Genau wie ein traditionelles Baguette sein muss. Hol dir jetzt das Pariser Bäckerei-Erlebnis nach Hause.</p>
-      </li>
-      <li class="card">
-        <button class="card__media card__media--toggle" type="button" aria-label="Bild von Nussbrot wechseln" aria-pressed="false">
-          <img src="assets/shop-12.webp" alt="" width="600" height="378" loading="lazy">
-          <img class="card__image-alt" src="assets/shop-12_2.webp" alt="" width="600" height="378" loading="lazy" aria-hidden="true">
-          <span class="badge">Ausverkauft</span>
-        </button>
-        <div class="card__head"><h3>Nussbrot</h3><span class="card__price">CHF 6.90</span></div>
-        <p class="card__text">Das glutenfreie Nussbrot von Panedodo ist mit knackigen Baumnüssen und sorgfältig ausgewählten, hochwertigen Zutaten hergestellt. Es hat eine reichhaltige, nussige Textur und ist perfekt für alle, die glutenfreie und köstliche Brotoptionen suchen. Probiere es noch heute!</p>
-      </li>
-    </ul>
-  </section>
 
   <!-- ============ FAQ ============ -->
   <section class="faq" id="faq" aria-labelledby="faq-title">
@@ -274,18 +300,6 @@
         <details class="faq__item"><summary>Wo kriege ich Panedodo Produkte?</summary><p>Panedodo-Produkte kannst du online im Webshop bestellen und am Samstagmorgen im Restaurant «<a href="https://www.damammabistro.com/">Da Mamma</a>» in der Churer Altstadt abholen.</p></details>
       </div>
 
-      <div class="faq__block">
-        <h3 class="faq__heading">Kauf- & Lieferkram</h3>
-        <details class="faq__item"><summary>Wie bestelle ich bei Panedodo?</summary><p>Die Bestellung ist ganz einfach: Du legst deine gewünschten Backwaren in den Warenkorb und bezahlst online bis Donnerstagabend um 22.00 Uhr. Danach wird dein Brot speziell für dich gebacken und sorgfältig verpackt. Am Samstagmorgen steht dein Panedodo-Bag ab 10.00 Uhr beim <a href="https://www.damammabistro.com/">Da Mamma</a> in Chur abholbereit.</p></details>
-        <details class="faq__item"><summary>Wieso bietet Panedodo keinen Postversand an?</summary><p>Panedodo verzichtet bewusst auf den Postversand, weil die Frische des Produkts an oberster Stelle steht und eine längere Lieferzeit die Qualität des Produkts beeinträchtigen könnte.</p></details>
-        <details class="faq__item"><summary>Wieso sind diese Produkte so teuer?</summary><p>Es gibt mehrere Gründe, warum glutenfreie Produkte teurer sind als Produkte, die Gluten enthalten: Einerseits sind alternative Mehlsorten teurer als glutenhaltige Mehle, wie z.B. Weizen-, Dinkel- und Roggenmehl. Auch die Produktion ist aufwändiger, denn der fehlende Klebestoff führt zu einem komplexeren Herstellungsprozess. Zum Schluss sind die Produktionsmengen von panedodo sehr klein. Jedes Produkt wird liebevoll von Hand hergestellt.</p></details>
-        <details class="faq__item"><summary>Kann ich Panedodo-Backwaren jederzeit bestellen?</summary><p>Ja, die Produkte kannst du jederzeit bestellen. Beachte aber, dass nur die Bestellungen, die bis Donnerstagabend um 22.00 Uhr eintreffen, am darauffolgenden Samstag zur Abholung bereit sind. Wenn du später als Donnerstagabend um 22.00 Uhr bestellt, wird deine Bestellung automatisch auf den übernächsten Samstag produziert.</p></details>
-        <details class="faq__item"><summary>Wird meine Bestellung nach Hause geliefert?</summary><p>Nein, die Bestellungen kann man nur vor Ort abholen. Panedodo verzichtet bewusst auf den Postversand, weil die Frische des Produkts an oberster Stelle steht und eine längere Lieferzeit die Qualität des Produkts beeinträchtigen könnte.</p></details>
-        <details class="faq__item"><summary>Ich habe keine Zeit, die Backwaren zu holen. Was tun?</summary><p>Du kannst die Bestellung bis Ladenschluss (normalerweise 18.00 Uhr) abholen. Grundsätzlich wird die Ware, die nicht abgeholt wird, vernichtet und du erhältst keine Rückerstattung. Du kannst die Ware auch von einer Drittperson abholen lassen. Schick ihr einfach deine Bestellbestätigung, sodass sie diese bei Bedarf vorweisen kann.</p></details>
-        <details class="faq__item"><summary>Ich habe den Abholtermin verpasst. Was tun?</summary><p>Grundsätzlich wird die Ware, die nicht abgeholt wird, vernichtet und du erhältst keine Rückerstattung. Falls du in letzter Sekunde aus dringenden Gründen verhindert bist, vorbeizukommen, schreibe uns eine Mail. Ich werde versuchen, eine Lösung zu finden.</p></details>
-        <details class="faq__item"><summary>Ich möchte meine Bestellung stornieren. Was tun?</summary><p>Du kannst deine Bestellung bis Freitag um 08.00 Uhr stornieren. Alle Stornierungsanfragen, die nach dieser Zeit eintreffen, können leider nicht berücksichtig werden.</p></details>
-        <details class="faq__item"><summary>Kann ich ein Brot-Abo einlösen?</summary><p>Ja. Für Panedodo-Fans gibt es den Panedodo Club.</p></details>
-      </div>
     </div>
   </section>
 
