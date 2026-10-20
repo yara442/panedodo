@@ -233,6 +233,51 @@
   }
 
   /* ---------- Nach oben ---------- */
+    (() => {
+      const section = document.querySelector('.kontakt');
+      const envelope = document.querySelector('[data-env]');
+      if (!section || !envelope) return;
+
+      document.documentElement.classList.add('js');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const flap = envelope.querySelector('.env__flap');
+      const letter = envelope.querySelector('.env__letter');
+      const clamp = (value, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value));
+      const range = (progress, start, end) => clamp((progress - start) / (end - start));
+      const ease = value => value < 0.5 ? 4 * value ** 3 : 1 - ((-2 * value + 2) ** 3) / 2;
+      let ticking = false;
+
+      function updateEnvelope() {
+        ticking = false;
+        const bounds = section.getBoundingClientRect();
+        const progress = clamp(-bounds.top / (bounds.height - window.innerHeight));
+        const flapProgress = ease(range(progress, 0.05, 0.3));
+        const riseProgress = ease(range(progress, 0.28, 0.58));
+        const formProgress = ease(range(progress, 0.56, 0.78));
+        const dropProgress = ease(range(progress, 0.55, 0.85));
+        section.style.setProperty('--flap', flapProgress.toFixed(4));
+        section.style.setProperty('--rise', riseProgress.toFixed(4));
+        section.style.setProperty('--form', formProgress.toFixed(4));
+        section.style.setProperty('--drop', dropProgress.toFixed(4));
+        flap.dataset.side = flapProgress > 0.5 ? 'back' : 'front';
+        if (formProgress > 0.85) letter.removeAttribute('inert');
+        else letter.setAttribute('inert', '');
+      }
+
+      function scheduleUpdate() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updateEnvelope);
+        }
+      }
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate);
+      updateEnvelope();
+    })();
+
+    /* ---------- Nach oben ---------- */
   const toTop = document.querySelector('.to-top');
   if (toTop) {
     const onScroll = () => toTop.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.8);
