@@ -289,6 +289,14 @@ position: relative; z-index: 1;
   color: var(--c-black);
 }
 
+#gf-brot .mise__title {
+  transform: rotate(3deg);
+}
+
+#pause .mise__title {
+  transform: rotate(3deg);
+}
+
 /* =========================================================
    Universal 12-Column Grid (Figma: 12 Spalten, 15px Gap, 30px Gutter)
    ========================================================= */
@@ -308,6 +316,11 @@ position: relative; z-index: 1;
 .grid-12 > *,
 .body-element > * {
   grid-column: var(--col, var(--col-start, auto) / span var(--col-span, 6));
+}
+
+#gf-brot .body-element > *,
+#pause .body-element > * {
+  grid-row: 1;
 }
 
 /* Spalten-Utility-Klassen */
@@ -801,6 +814,8 @@ html:not(.js) .kontakt__pin { position: relative; }
   .body-element > * {
     grid-column: 1 / -1 !important;
   }
+  #gf-brot .body-element > *,
+  #pause .body-element > * { grid-row: auto; }
   .body-element__title {
     font-size: clamp(1.5rem, 5.5vw, 2.2rem);
   }
