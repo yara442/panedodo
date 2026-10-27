@@ -90,7 +90,7 @@ button, input, textarea { font: inherit; color: inherit; }
   position: relative;
   max-width: 1728px;
   margin: 0 auto;
-  overflow-x: clip;
+  overflow-x: visible;
   overflow-y: visible;
   display: flex;
   flex-direction: column;
@@ -558,6 +558,14 @@ position: relative; z-index: 1;
   background: url("../assets/bg_quiz.svg") center / 100% 100% no-repeat;
   transform: translateY(var(--quiz-bg-parallax-y, 0px));
 }
+.mise__bg,
+.gf__bg,
+.panedodo__bg,
+.pause__bg,
+.zukunft__bg,
+.quiz__bg {
+  left: 50%; right: auto; width: 100vw; margin-left: -50vw;
+}
 .quiz .title-unit { z-index: 0; }
 .quiz__paper {
   position: relative; z-index: 1;
@@ -707,6 +715,7 @@ position: relative; z-index: 1;
 .green-zone {
   position: relative;
   display: flex; flex-direction: column; gap: var(--section-gap);
+  width: 100vw; margin-inline: calc(50% - 50vw);
   background:
     url("../assets/bg_green.svg") left top calc(208 * var(--u)) / 100% auto no-repeat,
     linear-gradient(transparent calc(208 * var(--u) + 26vw), var(--c-green) calc(208 * var(--u) + 26vw));
