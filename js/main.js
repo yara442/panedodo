@@ -63,7 +63,8 @@
   const miseIngredients = [...document.querySelectorAll('.mise__ingredient')];
   const parallaxBubbles = [...document.querySelectorAll('.kneten__bubble, .aufgehen__bubble')];
   const parallaxTitles = [...document.querySelectorAll('[data-title-parallax-range]')];
-  if (heroStars.length || baguette || quizPaper || quizBackground || greenZone || kontaktStage || miseIngredients.length || parallaxBubbles.length || parallaxTitles.length) {
+  const wegParallaxElements = [...document.querySelectorAll('.weg .body-element__media, .weg .body-element__text')];
+  if (heroStars.length || baguette || quizPaper || quizBackground || greenZone || kontaktStage || miseIngredients.length || parallaxBubbles.length || parallaxTitles.length || wegParallaxElements.length) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let framePending = false;
     const updateParallax = () => {
@@ -121,6 +122,13 @@
         const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
         const offset = reducedMotion.matches ? 0 : Math.max(-range, Math.min(range, -centerDistance * 0.08));
         title.style.setProperty('--title-parallax-y', `${offset}px`);
+      });
+      wegParallaxElements.forEach(element => {
+        const bounds = element.getBoundingClientRect();
+        const currentOffset = Number.parseFloat(element.style.getPropertyValue('--weg-parallax-y')) || 0;
+        const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
+        const offset = reducedMotion.matches ? 0 : Math.max(-30, Math.min(30, -centerDistance * 0.08));
+        element.style.setProperty('--weg-parallax-y', `${offset}px`);
       });
       framePending = false;
     };
