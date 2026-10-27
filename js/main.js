@@ -53,6 +53,33 @@
     });
   });
 
+  const fadeInImages = [...document.querySelectorAll('[data-fade-in]')];
+  if (fadeInImages.length && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const fadeObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-fade-visible');
+        entry.target.classList.remove('is-fade-pending');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.15 });
+    fadeInImages.forEach(image => {
+      image.classList.add('is-fade-pending');
+      fadeObserver.observe(image);
+    });
+  }
+
+  const contactForm = document.querySelector('.env__letter');
+  contactForm?.addEventListener('submit', event => {
+    event.preventDefault();
+    const formData = new FormData(contactForm);
+    const email = String(formData.get('email') || '').trim();
+    const comment = String(formData.get('message') || '').trim();
+    const body = [comment, email && `Absender: ${email}`].filter(Boolean).join('\n\n');
+    const subject = encodeURIComponent('Kontaktanfrage über Panedodo');
+    window.location.href = `mailto:ciao@panedodo.ch?subject=${subject}&body=${encodeURIComponent(body)}`;
+  });
+
   const heroStars = [...document.querySelectorAll('.hero__star, .hero__star-mobile')];
   const baguette = document.querySelector('.hero__baguette');
   const quizPaper = document.querySelector('.quiz__paper');
