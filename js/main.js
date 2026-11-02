@@ -88,9 +88,9 @@
   const kontaktStage = document.querySelector('.kontakt__stage');
   const kontaktForm = kontaktStage?.querySelector('.kontakt__form');
   const miseIngredients = [...document.querySelectorAll('.mise__ingredient')];
-  const parallaxBubbles = [...document.querySelectorAll('.kneten__bubble, .aufgehen__bubble')];
+  const parallaxBubbles = [...document.querySelectorAll('.kneten__bubble, .story-step__bubble')];
   const parallaxTitles = [...document.querySelectorAll('[data-title-parallax-range]')];
-  const wegParallaxElements = [...document.querySelectorAll('.weg .body-element__media, .weg .body-element__text')];
+  const wegParallaxElements = [...document.querySelectorAll('.weg .story-layout__media, .weg .story-layout__text')];
   if (heroStars.length || baguette || quizPaper || quizBackground || greenZone || kontaktStage || miseIngredients.length || parallaxBubbles.length || parallaxTitles.length || wegParallaxElements.length) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let framePending = false;
@@ -129,10 +129,10 @@
       miseIngredients.forEach(ingredient => {
         const range = Number.parseFloat(ingredient.dataset.parallaxRange) || 0;
         const bounds = ingredient.getBoundingClientRect();
-        const currentOffset = Number.parseFloat(ingredient.style.getPropertyValue('--mise-parallax-y')) || 0;
+        const currentOffset = Number.parseFloat(ingredient.style.getPropertyValue('--story-step-parallax-y')) || 0;
         const centerDistance = bounds.top + bounds.height / 2 - currentOffset - window.innerHeight / 2;
         const offset = reducedMotion.matches ? 0 : Math.max(-range, Math.min(range, -centerDistance * 0.08));
-        ingredient.style.setProperty('--mise-parallax-y', `${offset}px`);
+        ingredient.style.setProperty('--story-step-parallax-y', `${offset}px`);
       });
       parallaxBubbles.forEach(bubble => {
         const range = Number.parseFloat(bubble.dataset.parallaxRange) || 0;
@@ -286,15 +286,24 @@
       function updateEnvelope() {
         ticking = false;
         const bounds = section.getBoundingClientRect();
-        const progress = clamp(-bounds.top / (bounds.height - window.innerHeight));
-        const flapProgress = ease(range(progress, 0.05, 0.3));
-        const riseProgress = ease(range(progress, 0.28, 0.58));
-        const formProgress = ease(range(progress, 0.56, 0.78));
-        const dropProgress = ease(range(progress, 0.55, 0.85));
+        const scrollDistance = bounds.height - window.innerHeight;
+        const originalScrollDistance = Math.max(1, scrollDistance - 1500);
+        const progress = clamp(-bounds.top / scrollDistance);
+        const originalProgress = clamp(-bounds.top / originalScrollDistance);
+        const delayProgress = 1500 / scrollDistance;
+        const envelopeProgress = clamp((progress - delayProgress) / (1 - delayProgress));
+        const flapProgress = ease(range(envelopeProgress, 0.05, 0.3));
+        const riseProgress = ease(range(envelopeProgress, 0.28, 0.58));
+        const formProgress = ease(range(envelopeProgress, 0.56, 0.78));
+        const dropProgress = ease(range(originalProgress, 0.55, 0.85));
+        const envelopeDropProgress = ease(range(envelopeProgress, 0.55, 0.85));
+        const envelopeOffset = 1500 * (1 - ease(range(progress, 0, delayProgress)));
         section.style.setProperty('--flap', flapProgress.toFixed(4));
         section.style.setProperty('--rise', riseProgress.toFixed(4));
         section.style.setProperty('--form', formProgress.toFixed(4));
         section.style.setProperty('--drop', dropProgress.toFixed(4));
+        section.style.setProperty('--env-drop', envelopeDropProgress.toFixed(4));
+        section.style.setProperty('--env-offset', `${envelopeOffset.toFixed(2)}px`);
         flap.dataset.side = flapProgress > 0.5 ? 'back' : 'front';
         if (formProgress > 0.85) letter.removeAttribute('inert');
         else letter.setAttribute('inert', '');
