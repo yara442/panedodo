@@ -7,7 +7,7 @@
 /* ---------- Fonts ---------- */
 @font-face {
   font-family: "panedodo Display";
-  src: url("../fonts/panedodo-display-semibold.tff") format("truetype");
+  src: url("../fonts/panedodoDisplay-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-display: swap;
 }
