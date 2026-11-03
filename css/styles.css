@@ -8,7 +8,7 @@
 @font-face {
   font-family: "panedodo Display";
   src: url("../fonts/panedodoDisplay-SemiBold.ttf") format("truetype");
-  font-weight: 600;
+  font-weight: 800;
   font-display: swap;
 }
 @font-face {
@@ -107,7 +107,7 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .display {
   font-family: var(--f-display);
-  font-weight: 600;
+  font-weight: 800;
   font-size: var(--fs-display);
   line-height: 0.9;
   letter-spacing: -0.03em;
@@ -464,7 +464,7 @@ position: relative; z-index: 1;
   color: var(--c-white); text-align: center;
 }
 #zukunft .bubble__text {
-  font-family: var(--f-display); font-weight: 600;
+  font-family: var(--f-display); font-weight: 800;
   font-size: calc(var(--bw) * .200); line-height: 0.9;
   text-transform: uppercase;
 }
@@ -550,7 +550,7 @@ position: relative; z-index: 1;
 .answer:has(input:checked)::after { opacity: 1; }
 .answer:has(input:focus-visible) { outline: 2px solid var(--c-blue); outline-offset: 3px; }
 .quiz__result { text-align: center; font-size: var(--fs-body); }
-.quiz__result strong { display: block; font-family: var(--f-display); font-weight: 600; font-size: var(--fs-eyebrow); line-height: .9; text-transform: uppercase; margin-top: 12px; }
+.quiz__result strong { display: block; font-family: var(--f-display); font-weight: 800; font-size: var(--fs-eyebrow); line-height: .9; text-transform: uppercase; margin-top: 12px; }
 .quiz__actions { display: flex; justify-content: flex-end; }
 
 /* ---------- Kontakt + Footer (grüne Fläche) ---------- */
