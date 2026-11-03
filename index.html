@@ -51,23 +51,25 @@
     <article class="story-step" id="anfang">
       <div class="story-step__background" aria-hidden="true"></div>
 
-      <div class="story-step__content">
-        <div class="title-unit story-step__header">
-          <h2 class="display display--sm story-step__title story-step__title--light">Alles begann  <br> genau hier.</h2>
+      <div class="story-step__content" data-pin data-pin-pause="0.2" data-pin-mode="middle" data-pin-media="(min-width: 801px)">
+        <div class="story-step__head" data-pin-head>
+          <div class="title-unit story-step__header" data-pin-title>
+            <h2 class="display display--sm story-step__title story-step__title--light">Alles begann  <br> genau hier.</h2>
+          </div>
         </div>
 
-        <div class="story-layout">
+        <div class="story-layout" data-pin-content>
 
           <div class="story-layout__media">
             <div class="story-layout__landscape-wrap">
-              <img src="assets/pd-weg-anfang-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-anfang-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image">
             </div>
             <div class="story-layout__portrait-wrap">
-              <img src="assets/pd-weg-anfang-gross.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-anfang-gross.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image">
             </div>
           </div>
 
-          <div class="story-layout__text body-unit" data-fade-in>
+          <div class="story-layout__text body-unit">
 
             <p class="story-layout__description">2015 erhält Dora, die Gründerin von Panedodo, die Diagnose Zöliakie. Damals lebt sie noch in Italien, wo das glutenfreie Angebot schon gross ist und immer weiter wächst.</p>
           </div>
@@ -81,23 +83,25 @@
     <article class="story-step" id="gf-brot">
       <div class="gf__bg" aria-hidden="true"></div>
 
-      <div class="story-step__content">
-        <div class="title-unit story-step__header">
-          <h2 class="display display--sm story-step__title story-step__title--blue">Wo ist das <br>Glutenfreie Brot?</h2>
+      <div class="story-step__content" data-pin data-pin-pause="0.2" data-pin-mode="middle" data-pin-media="(min-width: 801px)">
+        <div class="story-step__head" data-pin-head>
+          <div class="title-unit story-step__header" data-pin-title>
+            <h2 class="display display--sm story-step__title story-step__title--blue">Wo ist das <br>Glutenfreie Brot?</h2>
+          </div>
         </div>
 
-        <div class="story-layout">
+        <div class="story-layout" data-pin-content>
 
           <div class="story-layout__media">
             <div class="story-layout__landscape-wrap">
-              <img src="assets/pd-weg-gfbrot-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-gfbrot-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image">
             </div>
             <div class="story-layout__portrait-wrap">
-              <img src="assets/pd-weg-gfbrot-gross.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-gfbrot-gross.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image">
             </div>
           </div>
 
-          <div class="story-layout__text body-unit" data-fade-in>
+          <div class="story-layout__text body-unit">
             <p class="story-layout__description">2016 zieht Dora in die Schweiz und merkt schnell: Für Zölis gibt’s hier nicht viel zu holen. In den grossen Supermärkten stehen ein paar traurige, abgepackte Produkte im Regal. Im Reformhaus ist die Auswahl etwas grösser – doch auch das wird ein paar Jahre später Konkurs anmelden. Und glutenfreie Cafés oder Bäckereien? Fehlanzeige! Was also tun in dieser glutenfreien Wüste?</p>
           </div>
         </div>
@@ -106,16 +110,20 @@
     </article>
 
      <!-- Selbst ist die Frau -->
-    <article class="story-step" id="selbst">
+    <article class="story-step" id="selbst" data-pin-hold data-pin-pause="0.2" data-pin-media="(min-width: 801px)">
       <div class="selbst__bg" aria-hidden="true"></div>
 
-      <div class="story-step__content">
+      <div class="story-step__content" data-pin-hold-item>
         <div class="title-unit story-step__header">
-          <h2 class="display display--sm story-step__title story-step__title--blue">Selbst ist <br> die Frau</h2>
+          <h2 class="display display--sm story-step__title story-step__title--blue" style="margin-top: calc(440 * var(--u));">Selbst ist <br> die Frau</h2>
         </div>
 
-      <div class="bubble bubble--pink story-step__bubble" data-parallax-range="45" data-fade-in>
+      <div class="bubble bubble--pink story-step__bubble" data-parallax-range="45" data-fade-in style="margin-top: calc(440 * var(--u));">
         <span class="bubble__text">Im August 2023 nimmt <br> Dora die Sache selbst in die Hand. Sie beginnt, bei sich zu Hause zu backen. Über einen Onlineshop verkauft sie ihre Kreationen zur Abholung in Chur. </span>
+      </div>
+      <!-- Nur mobil: Text der Sprechblase (die Sprechblase ist dort ausgeblendet) -->
+      <div class="story-layout__mobile-copy body-unit">
+        <p class="story-layout__description">Im August 2023 nimmt Dora die Sache selbst in die Hand. Sie beginnt, bei sich zu Hause zu backen. Über einen Onlineshop verkauft sie ihre Kreationen zur Abholung in Chur.</p>
       </div>
       </div>
 
@@ -125,28 +133,31 @@
     <article class="story-step" id="panedodo">
       <div class="panedodo__bg" aria-hidden="true"></div>
 
-      <div class="story-step__content">
-        <div class="title-unit story-step__header">
-          <h2 class="display display--sm story-step__title story-step__title--green">Panedodo in Chur</h2>
+      <div class="story-step__content" data-pin data-pin-pause="0.2" data-pin-mode="middle" data-pin-media="(min-width: 801px)">
+        <div class="story-step__head" data-pin-head>
+          <div class="title-unit story-step__header" data-pin-title>
+            <h2 class="display display--sm story-step__title story-step__title--light">Panedodo in Chur</h2>
+          </div>
         </div>
         
 
-        <div class="story-layout">
+        <div class="story-layout" data-pin-content>
 
           <div class="story-layout__media">
             <div class="story-layout__landscape-wrap">
-              <img src="assets/pd-weg-panedod-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-panedod-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image">
             </div>
             <div class="story-layout__portrait-wrap">
-              <video src="assets/pd-verpackungsvid.mp4" width="510" height="764" class="story-layout__image" autoplay muted loop playsinline aria-label="Glutenfreies Brot in der Bäckerei" data-fade-in>
+              <video src="assets/pd-verpackungsvid.mp4" width="510" height="764" class="story-layout__image" autoplay muted loop playsinline aria-label="Glutenfreies Brot in der Bäckerei">
               </video>
             </div>
           </div>
 
-          <div class="story-layout__text body-unit" data-fade-in>
+          <div class="story-layout__text body-unit">
             <p class="story-layout__description">Während rund eineinhalb Jahren entstehen bei Panedodo frische Brote, feine Backwaren und saisonale Spezialitäten, von Weihnachtsguetzli bis zu neuen Kreationen. Neben Privatkund:innen beliefert Dora auch Geschäftskunden, darunter das Restaurant Flavours in Chur.</p>
           </div>
 
+      </div>
       </div>
 
     </article>
@@ -155,24 +166,26 @@
     <article class="story-step" id="pause">
       <div class="pause__bg" aria-hidden="true"></div>
 
-      <div class="story-step__content">
-        <div class="title-unit story-step__header">
-          <h2 class="display display--sm story-step__title story-step__title--light">Auch ne Pause <br> ist wichtig</h2>
+      <div class="story-step__content" data-pin data-pin-pause="0.2" data-pin-mode="middle" data-pin-media="(min-width: 801px)">
+        <div class="story-step__head" data-pin-head>
+          <div class="title-unit story-step__header" data-pin-title>
+            <h2 class="display display--sm story-step__title story-step__title--blue">Auch ne Pause <br> ist wichtig</h2>
+          </div>
         </div>
 
-        <div class="story-layout">
+        <div class="story-layout" data-pin-content>
 
           <div class="story-layout__media">
             <div class="story-layout__landscape-wrap">
-              <img src="assets/pd-weg-pause-klein.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-pause-gross.webp" alt="Als alles begann - Impression Italien" width="247" height="165" class="story-layout__image">
             </div>
 
             <div class="story-layout__portrait-wrap">
-              <img src="assets/pd-weg-pause-gross.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-pause-klein.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image">
             </div>
           </div>
 
-          <div class="story-layout__text body-unit" data-fade-in>
+          <div class="story-layout__text body-unit">
             <p class="story-layout__description">Manchmal kommt das Leben dazwischen. Ab Weihnachten 2024 legt Dora wegen ihrer Mutterschaft eine Pause ein. Was ursprünglich nur ein Jahr dauern sollte, wird mit dem Wiedereinstieg ins Berufsleben und einem kleinen Kind schwieriger als gedacht. Deshalb bleibt Panedodo vorerst geschlossen.</p>
           </div>
         </div>
@@ -184,31 +197,33 @@
     <article class="story-step" id="zukunft">
       <div class="zukunft__bg" aria-hidden="true"></div>
 
-      <div class="story-step__content">
-        <div class="title-unit story-step__header">
-          <h2 class="display display--sm story-step__title story-step__title--light">Der Onlineshop <br>schliesst<span class="zukunft__mobile-title">, aber der Traum bleibt!</span></h2>
+      <div class="story-step__content" data-pin data-pin-pause="0.2" data-pin-mode="middle" data-pin-media="(min-width: 801px)">
+        <div class="story-step__head" data-pin-head>
+          <div class="title-unit story-step__header" data-pin-title>
+            <h2 class="display display--sm story-step__title story-step__title--light">Der Onlineshop <br>schliesst<span class="zukunft__mobile-title">, aber der Traum bleibt!</span></h2>
+            <div class="bubble bubble--yellow story-step__bubble" data-parallax-range="45" data-fade-in>
+              <span class="bubble__text">der Traum bleibt!</span>
+            </div>
+          </div>
         </div>
 
-        <div class="story-layout">
+        <div class="story-layout" data-pin-content>
 
           <div class="story-layout__media">
             <div class="story-layout__landscape-wrap">
               <picture>
                 <source media="(max-width: 800px)" srcset="assets/pd-zukunft-quer-mobile.webp">
-                <img src="assets/pd-weg-zukunft-klein.webp" alt="Panedodo – Zukunft" width="247" height="165" class="story-layout__image" data-fade-in>
+                <img src="assets/pd-weg-zukunft-klein.webp" alt="Panedodo – Zukunft" width="247" height="165" class="story-layout__image">
               </picture>
             </div>
             <div class="story-layout__portrait-wrap">
-              <img src="assets/pd-zukunft-quer-mobile.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image" data-fade-in>
+              <img src="assets/pd-weg-zukunft-gross.webp" alt="Als alles begann - Bäckerei Auslage" width="510" height="764" class="story-layout__image">
             </div>
           </div>
 
-          <div class="story-layout__text body-unit" data-fade-in>
+          <div class="story-layout__text body-unit">
             <p class="story-layout__description">Dieses Kapitel ist abgeschlossen. Doras Traum von einer eigenen glutenfreien Bäckerei lebt trotzdem weiter. Sie sucht nach einem bezahlbaren Backraum in Chur und Umgebung. Vielleicht wartet dort bereits das nächste Kapitel von Panedodo.</p>
           </div>
-          <div class="bubble bubble--yellow story-step__bubble" data-parallax-range="45">
-        <span class="bubble__text">der Traum bleibt!</span>
-      </div>
         </div>
       </div>
 
@@ -218,13 +233,15 @@
 
 
   <!-- ============ Quiz ============ -->
-  <section class="quiz" id="quiz" aria-labelledby="quiz-title">
-    <div class="quiz__bg" aria-hidden="true"></div>
-    <div class="title-unit title-unit--pink">
-      <p class="eyebrow">Quiz</p>
-      <h2 id="quiz-title" class="display">Was ist deine<br>Crustität?</h2>
+  <section class="quiz" id="quiz" aria-labelledby="quiz-title" data-pin data-pin-pause="0.35">
+    <div class="quiz__bg" aria-hidden="true" data-pin-follow></div>
+    <div class="quiz__head" data-pin-head>
+      <div class="title-unit title-unit--pink" data-pin-title>
+        <p class="eyebrow">Quiz</p>
+        <h2 id="quiz-title" class="display">Was ist deine<br>Crustität?</h2>
+      </div>
     </div>
-    <div class="quiz__paper">
+    <div class="quiz__paper" data-pin-content>
       <form class="quiz__frame" data-quiz>
         <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="9" aria-valuenow="1" aria-label="Fortschritt">
           <span class="progress__bar"></span>

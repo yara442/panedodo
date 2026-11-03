@@ -169,6 +169,173 @@
     updateParallax();
   }
 
+  /* ---------- Scroll-Ablauf (Stories + Quiz) ----------
+     Bereiche mit [data-pin]: Der Titel bleibt stehen, der Inhalt scrollt bis zur
+     Bildschirmmitte, bleibt kurz stehen und scrollt danach zusammen mit dem Titel weg.
+     data-pin-pause        Länge des Stopps als Anteil der Bildschirmhöhe
+     data-pin-mode="middle" Titel und Inhalt stoppen gemeinsam: Titel knapp über der Mitte,
+                           Inhalt beginnt in der Mitte. Der Hintergrund scrollt derweil weiter.
+     data-pin-media        nur aktiv, wenn diese Media-Query zutrifft */
+  const pinAreas = [...document.querySelectorAll('[data-pin]')].map(area => ({
+    area,
+    head: area.querySelector('[data-pin-head]'),
+    title: area.querySelector('[data-pin-title]'),
+    content: area.querySelector('[data-pin-content]'),
+    pause: Number.parseFloat(area.dataset.pinPause) || 0.3,
+    middle: area.dataset.pinMode === 'middle',
+    media: area.dataset.pinMedia ? window.matchMedia(area.dataset.pinMedia) : null,
+  })).filter(pin => pin.head && pin.title && pin.content);
+  const pinHolds = [...document.querySelectorAll('[data-pin-hold]')].map(area => {
+    const item = area.querySelector('[data-pin-hold-item]');
+    return {
+      area,
+      item,
+      title: item?.querySelector('.story-step__title'),
+      bubble: item?.querySelector('.story-step__bubble'),
+      pause: Number.parseFloat(area.dataset.pinPause) || 0.2,
+      media: area.dataset.pinMedia ? window.matchMedia(area.dataset.pinMedia) : null,
+    };
+  }).filter(hold => hold.item && hold.title);
+  if (pinAreas.length || pinHolds.length) {
+    const storyTabs = document.querySelector('.weg .tabs');
+    const pinVars = ['--pin-pause', '--pin-title-top', '--pin-content-top', '--pin-head-h', '--pin-head-mb'];
+    let storyTitleTop = 0;
+    const layoutPin = ({ area, head, title, content, pause, middle, media }) => {
+      if (media && !media.matches) {
+        pinVars.forEach(name => area.style.removeProperty(name));
+        return;
+      }
+      const vh = window.innerHeight;
+      const titleHeight = title.offsetHeight;
+      const contentHeight = content.offsetHeight;
+      let titleTop;
+      let contentTop;
+      if (middle) {
+        // Titel knapp über der Mitte (aber unter der Tab-Leiste), Inhalt direkt darunter ab der Mitte.
+        const gap = Math.max(32, Math.round(window.innerWidth * 48 / 1728));
+        titleTop = Math.max(storyTitleTop, Math.round(vh / 2 - gap - titleHeight));
+        contentTop = titleTop + titleHeight + gap;
+        area.style.setProperty('--pin-title-top', `${titleTop}px`);
+      } else {
+        // Inhalt mittig; ist er zu hoch, stoppt er, sobald sein unteres Ende sichtbar ist.
+        titleTop = Number.parseFloat(getComputedStyle(title).top) || 0;
+        contentTop = contentHeight > vh - 32 ? vh - contentHeight - 16 : (vh - contentHeight) / 2;
+      }
+      area.style.setProperty('--pin-pause', `${Math.round(vh * pause)}px`);
+      area.style.setProperty('--pin-content-top', `${contentTop}px`);
+      // Titel-Bereich so lang machen, dass Titel und Inhalt im selben Moment losgelassen werden.
+      const areaStyle = getComputedStyle(area);
+      const paddingTop = Number.parseFloat(areaStyle.paddingTop) || 0;
+      const innerHeight = area.clientHeight - paddingTop - (Number.parseFloat(areaStyle.paddingBottom) || 0);
+      const headTop = head.offsetTop - paddingTop;
+      const headHeight = Math.max(titleHeight, titleTop + titleHeight - headTop - (contentTop + contentHeight - innerHeight));
+      area.style.setProperty('--pin-head-h', `${headHeight}px`);
+      area.style.setProperty('--pin-head-mb', `${titleHeight - headHeight}px`);
+    };
+    /* Bereiche mit [data-pin-hold]: Titel und Sprechblase stoppen gemeinsam in der Bildschirmmitte
+       (Länge über data-pin-pause) und scrollen danach weiter. */
+    const layoutHold = ({ area, item, title, bubble, pause, media }) => {
+      if (media && !media.matches) {
+        ['--pin-pause', '--pin-hold-top'].forEach(name => area.style.removeProperty(name));
+        return;
+      }
+      const vh = window.innerHeight;
+      // Sichtbarer Teil = Titel (ohne seinen Innenabstand unten) und Sprechblase, ohne Leerraum darüber.
+      const titleTop = title.parentElement.offsetTop + title.offsetTop;
+      const titleBottom = titleTop + title.offsetHeight - (Number.parseFloat(getComputedStyle(title).paddingBottom) || 0);
+      const visibleTop = bubble ? Math.min(titleTop, bubble.offsetTop) : titleTop;
+      const visibleBottom = bubble ? Math.max(titleBottom, bubble.offsetTop + bubble.offsetHeight) : titleBottom;
+      const holdTop = Math.max(storyTitleTop - titleTop, Math.round((vh - (visibleBottom - visibleTop)) / 2 - visibleTop));
+      area.style.setProperty('--pin-hold-top', `${holdTop}px`);
+      area.style.setProperty('--pin-pause', `${Math.round(vh * pause)}px`);
+    };
+    /* Weiches Stoppen und Anfahren: Ohne Hilfe stoppt ein "sticky"-Element schlagartig.
+       Hier wird es kurz vor dem Stopp abgebremst und danach sanft wieder beschleunigt
+       (zusätzliche Verschiebung über die CSS-Variable --pin-ease-y). */
+    const EASE = 0.3; // Länge der Brems-/Anfahrstrecke als Anteil der Bildschirmhöhe
+    let easeGroups = [];
+    const smoothClamp = (a, max, r) => {
+      const h = r / 2;
+      if (a <= -h) return 0;
+      if (a < h) return (a + h) ** 2 / (2 * r);
+      if (a <= max - h) return a;
+      if (a < max + h) return max - (max + h - a) ** 2 / (2 * r);
+      return max;
+    };
+    const measureEase = el => {
+      const box = el.parentElement.closest('[data-pin-head], [data-pin], [data-pin-hold]');
+      const boxStyle = getComputedStyle(box);
+      const paddingTop = Number.parseFloat(boxStyle.paddingTop) || 0;
+      const inner = box.clientHeight - paddingTop - (Number.parseFloat(boxStyle.paddingBottom) || 0);
+      // Natürliche Position (ohne "sticky") messen.
+      el.style.position = 'static';
+      const naturalTop = el.offsetTop - paddingTop;
+      el.style.position = '';
+      const stickyTop = Number.parseFloat(getComputedStyle(el).top) || 0;
+      return { el, box, paddingTop, naturalTop, stickyTop, hold: Math.max(0, inner - el.offsetHeight - naturalTop) };
+    };
+    const measureEaseGroups = () => {
+      easeGroups.forEach(group => group.items.forEach(({ el }) => el.style.removeProperty('--pin-ease-y')));
+      const vh = window.innerHeight;
+      const groups = [
+        ...pinAreas.filter(pin => !pin.media || pin.media.matches).map(pin => ({ elements: [pin.title, pin.content], area: pin.area })),
+        ...pinHolds.filter(hold => !hold.media || hold.media.matches).map(hold => ({ elements: [hold.item], area: hold.area })),
+      ];
+      easeGroups = groups.map(({ elements, area }) => {
+        const items = elements.map(measureEase);
+        // [data-pin-follow] (z.B. Quiz-Hintergrund) bewegt sich exakt mit dem Inhalt mit.
+        const followers = [...area.querySelectorAll('[data-pin-follow]')];
+        // Gleiche Strecke für alle Elemente eines Bereichs, damit sie zusammen losfahren.
+        const r = Math.min(vh * EASE, 0.8 * Math.min(...items.map(item => item.hold)));
+        return { items, r, followers };
+      });
+    };
+    const updateEase = () => {
+      easeGroups.forEach(({ items, r, followers }) => items.forEach((item, index) => {
+        const boxTop = item.box.getBoundingClientRect().top + item.paddingTop;
+        const a = item.stickyTop - (boxTop + item.naturalTop);
+        const moved = r > 0 ? smoothClamp(a, item.hold, r) : Math.max(0, Math.min(a, item.hold));
+        const offset = moved - Math.max(0, Math.min(a, item.hold));
+        item.el.style.setProperty('--pin-ease-y', `${offset.toFixed(2)}px`);
+        if (index === items.length - 1) followers.forEach(el => el.style.setProperty('--pin-follow-y', `${moved.toFixed(2)}px`));
+      }));
+    };
+    let easePending = false;
+    window.addEventListener('scroll', () => {
+      if (easePending) return;
+      easePending = true;
+      requestAnimationFrame(() => { easePending = false; updateEase(); });
+    }, { passive: true });
+
+    const layoutPins = () => {
+      // Story-Titel bleiben knapp unter der Tab-Leiste stehen.
+      if (storyTabs) {
+        const tabsBottom = (Number.parseFloat(getComputedStyle(storyTabs).top) || 0) + storyTabs.offsetHeight;
+        storyTitleTop = Math.round(tabsBottom + 24);
+        document.documentElement.style.setProperty('--story-title-top', `${storyTitleTop}px`);
+      }
+      pinAreas.forEach(layoutPin);
+      pinHolds.forEach(layoutHold);
+      measureEaseGroups();
+      updateEase();
+    };
+    let pinLayoutPending = false;
+    const schedulePinLayout = () => {
+      if (pinLayoutPending) return;
+      pinLayoutPending = true;
+      requestAnimationFrame(() => { pinLayoutPending = false; layoutPins(); });
+    };
+    window.addEventListener('resize', schedulePinLayout);
+    window.addEventListener('load', schedulePinLayout);
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(schedulePinLayout);
+      pinAreas.forEach(({ title, content }) => { observer.observe(title); observer.observe(content); });
+      pinHolds.forEach(({ item }) => observer.observe(item));
+    }
+    document.fonts?.ready.then(schedulePinLayout);
+    layoutPins();
+  }
+
   /* ---------- Quiz ---------- */
   const QUESTIONS = [
     { q: '«Harte Schale, weicher Kern», trifft das auf dich zu?', a: [
@@ -276,6 +443,8 @@
       document.documentElement.classList.add('js');
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+      // Scrollstrecke, bevor der Umschlag auftaucht (muss zu --env-delay in styles.css passen)
+      const ENV_DELAY = 700;
       const flap = envelope.querySelector('.env__flap');
       const letter = envelope.querySelector('.env__letter');
       const clamp = (value, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value));
@@ -287,17 +456,17 @@
         ticking = false;
         const bounds = section.getBoundingClientRect();
         const scrollDistance = bounds.height - window.innerHeight;
-        const originalScrollDistance = Math.max(1, scrollDistance - 1500);
+        const originalScrollDistance = Math.max(1, scrollDistance - ENV_DELAY);
         const progress = clamp(-bounds.top / scrollDistance);
         const originalProgress = clamp(-bounds.top / originalScrollDistance);
-        const delayProgress = 1500 / scrollDistance;
+        const delayProgress = ENV_DELAY / scrollDistance;
         const envelopeProgress = clamp((progress - delayProgress) / (1 - delayProgress));
         const flapProgress = ease(range(envelopeProgress, 0.05, 0.3));
         const riseProgress = ease(range(envelopeProgress, 0.28, 0.58));
         const formProgress = ease(range(envelopeProgress, 0.56, 0.78));
         const dropProgress = ease(range(originalProgress, 0.55, 0.85));
         const envelopeDropProgress = ease(range(envelopeProgress, 0.55, 0.85));
-        const envelopeOffset = 1500 * (1 - ease(range(progress, 0, delayProgress)));
+        const envelopeOffset = ENV_DELAY * (1 - ease(range(progress, 0, delayProgress)));
         section.style.setProperty('--flap', flapProgress.toFixed(4));
         section.style.setProperty('--rise', riseProgress.toFixed(4));
         section.style.setProperty('--form', formProgress.toFixed(4));

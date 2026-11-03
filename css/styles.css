@@ -277,7 +277,8 @@ position: relative; z-index: 1;
   position: relative;
   margin-top: max(calc(32 * var(--u)), 8px);
   margin-bottom: -1px;
-  padding: calc(510 * var(--u)) 0 calc(510 * var(--u));
+  /* Titel weiter oben (vorher 510), der Abstand liegt jetzt zwischen Titel und Inhalt */
+  padding: calc(150 * var(--u)) 0 calc(510 * var(--u));
 }
 .story-step + .story-step { margin-top: 0; }
 #anfang .story-step__content { margin-top: 50px; }
@@ -306,6 +307,7 @@ position: relative; z-index: 1;
 .story-step__title--light { color: var(--c-white); }
 .story-step__title--blue { color: var(--c-blue); }
 .story-step__title--green { color: var(--c-green); }
+.story-step__title--pink { color: var(--c-lavender); }
 
 #gf-brot .story-step__title {
   transform: rotate(3deg);
@@ -327,6 +329,40 @@ position: relative; z-index: 1;
 }
 .story-layout > * { grid-column: auto / span 6; }
 .story-layout { margin-top: -40px; margin-bottom: 150px; }
+
+/* ---------- Scroll-Ablauf (Stories + Quiz) ----------
+   Titel bleibt stehen, Inhalt scrollt bis zur Mitte, stoppt kurz, dann gehen beide zusammen weg.
+   Höhen und Positionen berechnet js/main.js (--pin-head-h, --pin-head-mb, --pin-content-top, --pin-pause). */
+[data-pin]::after { content: ""; display: block; height: var(--pin-pause, 0px); }
+[data-pin-head] {
+  position: relative; pointer-events: none;
+  height: var(--pin-head-h, auto);
+  margin-bottom: var(--pin-head-mb, 0px);
+}
+[data-pin-head] > * { pointer-events: auto; }
+[data-pin-content] { position: sticky; top: var(--pin-content-top, 0px); }
+
+/* Kurzer Stopp ohne eigenes Layout (Selbst ist die Frau): ganzer Inhalt hält in der Mitte */
+[data-pin-hold]::after { content: ""; display: block; height: var(--pin-pause, 0px); }
+[data-pin-hold-item] { position: sticky; top: var(--pin-hold-top, 0px); }
+
+/* Weiches Abbremsen/Anfahren (Wert kommt aus js/main.js) */
+[data-pin-title],
+[data-pin-content],
+[data-pin-hold-item] { translate: 0 var(--pin-ease-y, 0px); }
+
+.story-step__head { z-index: 2; }
+.story-step [data-pin-title] { position: sticky; top: var(--pin-title-top, var(--story-title-top, 180px)); }
+.story-step [data-pin-title] .story-step__title { padding-bottom: 0; }
+/* Abstand Titel → Inhalt (vorher 300 im Titel + 360 aus dem oberen Abstand) */
+.story-step .story-layout[data-pin-content] { margin-top: calc(660 * var(--u) - 40px); }
+@media (max-width: 800px) {
+  .story-step [data-pin-title],
+  .story-step [data-pin-content],
+  .story-step [data-pin-hold-item] { position: relative; top: auto; }
+  .story-step [data-pin-title] .story-step__title { padding-bottom: 0; }
+  .story-step .story-layout[data-pin-content] { margin-top: 0; }
+}
 #selbst .story-layout { margin-bottom: 0; }
 #anfang .story-layout__media,
 #panedodo .story-layout__media,
@@ -338,6 +374,9 @@ position: relative; z-index: 1;
 #zukunft .story-layout__text { grid-column: 9 / span 5; }
 #gf-brot .story-layout__text,
 #pause .story-layout__text { grid-column: 1 / span 4; }
+/* Pause: grosses Bild (pd-weg-pause-gross) links breit, kleines Bild rechts schmal */
+#pause .story-layout__landscape-wrap { grid-column: 1 / span 4; }
+#pause .story-layout__portrait-wrap { grid-column: 5 / span 2; }
 #panedodo .story-layout__landscape-wrap { grid-column: 1 / span 3; }
 #panedodo .story-layout__portrait-wrap { grid-column: 4 / span 4; }
 
@@ -360,7 +399,9 @@ position: relative; z-index: 1;
   grid-column: 1 / span 2;
   width: 100%;
 }
-#zukunft .story-layout__landscape-wrap { align-self: end; }
+/* Zukunft: Bilder oben bündig, kleines Bild 3 Spalten, grosses Bild 3 Spalten (vorher 2 + 4) */
+#zukunft .story-layout__landscape-wrap { align-self: start; grid-column: 1 / span 3; }
+#zukunft .story-layout__portrait-wrap { grid-column: 4 / span 3; }
 .story-layout__portrait-wrap {
   grid-column: 3 / span 4;
   width: 100%;
@@ -479,9 +520,12 @@ position: relative; z-index: 1;
 .quiz { position: relative; margin-top: 200px; padding-bottom: calc(40 * var(--u)); }
 .quiz__bg {
   position: absolute; left: 0; right: 0; top: calc(328 * var(--u));
-  height: auto; aspect-ratio: 1728 / 2500;
+  /* Unterkante ca. 250px unter dem Papier (statt fester Höhe), damit der Hintergrund nicht zu weit nach unten reicht */
+  bottom: calc(40 * var(--u) + var(--pin-pause, 0px) - 250px);
   background: url("../assets/bg_quiz.svg") center / 100% 100% no-repeat;
   transform: translateY(var(--quiz-bg-parallax-y, 0px));
+  /* bewegt sich mit dem Quiz-Papier mit (Wert aus js/main.js), damit er hinter dem Papier stehen bleibt */
+  translate: 0 var(--pin-follow-y, 0px);
 }
 .story-step__background,
 .gf__bg,
@@ -491,10 +535,11 @@ position: relative; z-index: 1;
 .quiz__bg {
   left: 50%; right: auto; width: 100vw; margin-left: -50vw;
 }
+.quiz__head { z-index: 3; }
 .quiz .title-unit { position: sticky; top: clamp(16px, 1.736vw, 25px); z-index: 3; padding-top: calc(2 * var(--gutter)); }
 .quiz__paper {
   position: sticky; z-index: 4;
-  margin-top: calc(750px - 77 * var(--u));
+  margin-top: calc(450px - 77 * var(--u)); /* Abstand Titel → Papier (vorher 750px) */
   min-height: calc(502 * var(--u));
   margin-left: calc(300 * var(--u)); margin-right: calc(300 * var(--u));
   padding: calc(77 * var(--u)) var(--gutter) calc(60 * var(--u));
@@ -558,7 +603,7 @@ position: relative; z-index: 1;
   position: relative;
   display: flex; flex-direction: column; gap: var(--section-gap);
   width: 100vw; margin-inline: calc(50% - 50vw);
-  margin-top: 1500px;
+  margin-top: 580px; /* Abstand Quiz → Kontakt */
   background:
     url("../assets/bg_kontakt.svg") left top calc(208 * var(--u)) / 100% auto no-repeat,
     linear-gradient(transparent calc(208 * var(--u) + 26vw), var(--c-green) calc(208 * var(--u) + 26vw));
@@ -573,8 +618,9 @@ position: relative; z-index: 1;
   --env-offset: 0px; --env-drop: 0;
 }
 .js .kontakt {
-  height: calc(340vh + 1500px); height: calc(340svh + 1500px);
-  --flap: 0; --rise: 0; --form: 0; --env-offset: 1500px;
+  /* Scrollstrecke Kontakt (vorher 340vh + 1500px). 700px = ENV_DELAY in js/main.js */
+  height: calc(260vh + 700px); height: calc(260svh + 700px);
+  --flap: 0; --rise: 0; --form: 0; --env-offset: 700px;
 }
 .kontakt__pin {
   position: sticky; top: 0; height: 100vh; height: 100svh;
@@ -644,6 +690,8 @@ html:not(.js) .kontakt__pin { position: relative; }
   .env__letter .field input { height: 40px; }
   .env__letter .field textarea { height: 56px; }
   .kontakt__title { top: calc(80px + 2svh); }
+  /* Umschlag höher, damit kein Leerraum unter dem Titel bleibt */
+  .env { bottom: calc(3svh + max(0px, 45svh - 260px) - var(--env-offset)); }
 }
 @media (prefers-reduced-motion: reduce) {
   [data-fade-in] { opacity: 1; transform: none; transition: none; }
@@ -707,17 +755,30 @@ html:not(.js) .kontakt__pin { position: relative; }
   .tabs__list { justify-content: flex-start; gap: 24px; }
 
   /* Als alles begann Mobile */
-  .story-step { height: auto; margin-top: 0; padding: 40px 0 56px; }
+  /* Einheitliche Abstände: oben 64px bis zum Titel, 32px Titel → Bild → Text, unten 96px */
+  .story-step { height: auto; margin-top: 0; padding: 64px 0 96px; }
+  #anfang .story-step__content,
+  #panedodo .story-step__content { margin-top: 0; }
+  .story-step .story-layout { margin-top: 0; margin-bottom: 0; }
+  .story-step .story-layout__text { margin-bottom: 0 !important; }
+  .body-unit p.story-layout__description { font-size: 1.125rem; line-height: 1.3; }
+
+  /* Selbst ist die Frau: Titel mittig im Stern, Text darunter */
+  #selbst { padding-top: 40px; }
+  /* Panedodo: Titel unter der weissen Welle oben */
+  #panedodo { padding-top: 140px; }
   #selbst .selbst__bg { display: none; }
-  #selbst .story-step__header { isolation: isolate; }
+  #selbst .story-step__header { isolation: isolate; padding-block: 56px; }
+  #selbst .story-step__title { margin-top: 0 !important; padding-bottom: 0; }
   #selbst .story-step__header::before {
     content: "";
     position: absolute;
     z-index: -1;
-    inset: -40px 0 -32px;
+    inset: 0 -4%;
     background: url("../assets/bg-selbst.webp") center / 100% 100% no-repeat;
     pointer-events: none;
   }
+  #selbst .story-layout__mobile-copy { padding-inline: var(--gutter); }
   #selbst .story-layout { margin-top: 0 !important; }
   #anfang .story-layout__landscape-wrap { grid-column: 1 / -1 !important; }
   #anfang .story-layout__portrait-wrap { display: none; }
@@ -757,7 +818,7 @@ html:not(.js) .kontakt__pin { position: relative; }
 
   .quiz__bg { top: 18%; }
   .quiz__paper {
-    margin: calc(1500px - 20px) 15px 0; padding: 48px 30px; min-height: 0;
+    margin: 480px 15px 0; padding: 48px 30px; min-height: 0; /* Abstand Titel → Papier mobil (vorher 1480px) */
     background-image: url("../assets/paper.webp");
     background-size: 100% 100%;
   }
