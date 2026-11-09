@@ -361,7 +361,7 @@ position: relative; z-index: 1;
   .story-step [data-pin-content],
   .story-step [data-pin-hold-item] { position: relative; top: auto; }
   .story-step [data-pin-title] .story-step__title { padding-bottom: 0; }
-  .story-step .story-layout[data-pin-content] { margin-top: 0; }
+  .story-step .story-layout[data-pin-content] { margin-top: -50px; }
 }
 #selbst .story-layout { margin-bottom: 0; }
 #anfang .story-layout__media,
@@ -736,10 +736,11 @@ html:not(.js) .kontakt__pin { position: relative; }
    Responsive
    ========================================================= */
 @media (max-width: 800px) {
-  :root { --section-gap: 96px; }
-
-  .btn, .answer { padding: 12px 24px; }
+  :root { --section-gap: 96gg 12px 24px; }
   .answer { font-size: var(--fs-body); }
+  /* "Next" (Quiz) und "Senden" (Kontakt) mobil: mehr Luft um den Text */
+  .quiz__actions .btn,
+  .env__letter .btn { padding: 16px 25px; }
 
   .hero { min-height: 0; padding-top: 250px; padding-bottom: 38vw; }
   .hero__star { display: none; }
@@ -761,7 +762,7 @@ html:not(.js) .kontakt__pin { position: relative; }
   #panedodo .story-step__content { margin-top: 0; }
   .story-step .story-layout { margin-top: 0; margin-bottom: 0; }
   .story-step .story-layout__text { margin-bottom: 0 !important; }
-  .body-unit p.story-layout__description { font-size: 1.125rem; line-height: 1.3; }
+  .body-unit p.story-layout__description { font-size: 1.25rem; line-height: 1.3; };
 
   /* Selbst ist die Frau: Titel mittig im Stern, Text darunter */
   #selbst { padding-top: 40px; }
@@ -775,7 +776,7 @@ html:not(.js) .kontakt__pin { position: relative; }
     position: absolute;
     z-index: -1;
     inset: 0 -4%;
-    background: url("../assets/bg-selbst.webp") center / 100% 100% no-repeat;
+    background: url("../assets/star_mobile.webp") center / 100% 100% no-repeat;
     pointer-events: none;
   }
   #selbst .story-layout__mobile-copy { padding-inline: var(--gutter); }
@@ -797,9 +798,11 @@ html:not(.js) .kontakt__pin { position: relative; }
   #zukunft .story-layout__landscape-wrap { grid-column: 1 / -1 !important; }
   #zukunft .story-layout__portrait-wrap { display: none; }
   #zukunft .story-layout__text { margin-bottom: 50px; }
-  #zukunft .zukunft__mobile-title { display: inline; }
+  /* Mobile Zusatz im Titel aus, weil die Sprechblase "der Traum bleibt!" jetzt auch mobil sichtbar ist */
+  #zukunft .zukunft__mobile-title { display: none; }
   .story-step__background { background-color: var(--c-lavender); }
-  .display--sm { font-size: clamp(2.2rem, 9vw, 3.2rem); white-space: normal; }
+  /* Story-Titel mobil gleich gross wie die normale Display-Schrift (vorher clamp(2.2rem, 9vw, 3.2rem)) */
+  .display--sm { font-size: var(--fs-display); white-space: normal; }
   .story-layout {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -814,7 +817,8 @@ html:not(.js) .kontakt__pin { position: relative; }
   }
 
   .story-step__bubble { --bw: 104px; left: 1%; top: 8px; }
-  #zukunft .bubble { display: none; }
+  /* Sprechblase "der Traum bleibt!" mobil: rechts unten am Titel, leicht überlappend */
+  #zukunft .story-step__bubble { --bw: 200px; left: auto; right: 3%; top: auto; bottom: -150px; }
 
   .quiz__bg { top: 18%; }
   .quiz__paper {
