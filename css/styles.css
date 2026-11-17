@@ -411,6 +411,7 @@ position: relative; z-index: 1;
   height: auto;
   display: block;
 }
+#zukunft .story-layout__image--mobile { display: none; }
 [data-fade-in] {
   transition: opacity 1s ease-out, transform 1s cubic-bezier(.16, 1, .3, 1);
 }
@@ -796,6 +797,8 @@ html:not(.js) .kontakt__pin { position: relative; }
   #pause .story-layout__portrait-wrap { display: none; }
   #pause .story-layout__text { margin-bottom: 50px; }
   #zukunft .story-layout__landscape-wrap { grid-column: 1 / -1 !important; }
+  #zukunft .story-layout__image--desktop { display: none; }
+  #zukunft .story-layout__image--mobile { display: block; }
   #zukunft .story-layout__portrait-wrap { display: none; }
   #zukunft .story-layout__text { margin-bottom: 50px; }
   /* Mobile Zusatz im Titel aus, weil die Sprechblase "der Traum bleibt!" jetzt auch mobil sichtbar ist */
